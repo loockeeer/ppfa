@@ -38,7 +38,11 @@
     {
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt-tree;
       devShells.${system}.default = pkgs.mkShell {
-        packages = libs;
+        packages = libs ++ [pkgs.simple-http-server];
+        shellHook = ''
+            simple-http-server -p 2131 . &> /dev/null
+            echo "Static server at http://localhost:2131 !"
+        '';
       };
 
       packages.${system}.default = ppfa;
