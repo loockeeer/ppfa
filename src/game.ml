@@ -51,7 +51,7 @@ let draw_rect config texture x y w h =
   | Color c ->
     Gfx.set_color config.ctx c;
     Gfx.fill_rect config.ctx config.window_surface x y w h
-  | _ -> failwith "todo"
+  | Image surf -> Gfx.blit_scale config.ctx config.window_surface surf x y w h
 ;;
 
 let update_rect_pos cfg dt =
@@ -89,8 +89,7 @@ let update cfg dt =
     None)
 ;;
 
-let run keys =
-  let win = Gfx.create "game_canvas:800x600:" in
+let run_custom win keys images =
   let t = Hashtbl.create (Array.length keys) in
   Array.iter (fun key -> Hashtbl.add t key false) keys;
   let cfg =
@@ -103,7 +102,7 @@ let run keys =
     ; window = win
     ; window_surface = Gfx.get_surface win
     ; ctx = Gfx.get_context win
-    ; textures = [| Colors.red; Colors.green; Colors.blue |]
+    ; textures = Array.of_list (List.map (fun x -> Image x) images)
     ; current = 0
     ; last_dt = 0.
     ; x = 100
@@ -111,4 +110,26 @@ let run keys =
     }
   in
   Gfx.main_loop (update cfg) (fun () -> ())
+;;
+
+let run keys =
+  let win = Gfx.create "game_canvas:800x600:" in
+  let ts = Gfx.load_file "resources/files/tile_set.txt" in
+  Gfx.main_loop
+    (fun _ -> Gfx.get_resource_opt ts)
+    (fun txt1 ->
+       let res_list =
+         String.split_on_char '\n' txt1
+         |> List.filter_map (fun p ->
+           if p = ""
+           then None
+           else Some (Gfx.load_image (Gfx.get_context win) ("resources/images/" ^ p)))
+       in
+       Gfx.main_loop
+         (fun _ ->
+            let result = List.map Gfx.get_resource_opt res_list in
+            if List.for_all (( <> ) None) result
+            then Some (List.map Option.get result)
+            else None)
+         (run_custom win keys))
 ;;
