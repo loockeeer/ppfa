@@ -1,5 +1,4 @@
 (library
  (name gfx_sdl)
  (implements gfx)
- (libraries tsdl tsdl-image tsdl-ttf)
-)
+ (libraries tsdl tsdl-image tsdl-ttf))
