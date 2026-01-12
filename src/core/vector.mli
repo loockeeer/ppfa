@@ -1,29 +1,32 @@
-type t = { x : float; y : float; }
 (** The type of 2D Vectors *)
+type t =
+  { x : float
+  ; y : float
+  }
 
-val add : t -> t -> t
 (** Addition of vectors *)
+val add : t -> t -> t
 
-val sub : t -> t -> t
 (** Subtraction of vectors *)
+val sub : t -> t -> t
 
-val mult : float -> t -> t
 (** Multiplication of a floating point number by a vector *)
+val mult : float -> t -> t
 
-val dot : t -> t -> float
 (** Dot product (scalar product) *)
+val dot : t -> t -> float
 
-val norm : t -> float
 (** Norm of a vector *)
+val norm : t -> float
 
-val normalize : t -> t
 (** Normlized vector *)
+val normalize : t -> t
 
-val pp : Format.formatter -> t -> unit
 (** Pretty printer for a vector *)
+val pp : Format.formatter -> t -> unit
 
-val zero : t
 (** The null vector *)
+val zero : t
 
-val is_zero : t -> bool
 (** Test for the null vector *)
+val is_zero : t -> bool

@@ -1,4 +1,5 @@
 open Ecs
+
 class position () =
   let r = Component.init Vector.zero in
   object
@@ -6,7 +7,7 @@ class position () =
   end
 
 class box () =
-  let r = Component.init Rect.{width = 0; height = 0} in
+  let r = Component.init Rect.{ width = 0; height = 0 } in
   object
     method box = r
   end
@@ -18,10 +19,10 @@ class texture () =
   end
 
 class velocity () =
-    let r = Component.init Vector.zero in
-    object
-        method velocity = r
-    end
+  let r = Component.init Vector.zero in
+  object
+    method velocity = r
+  end
 
 type tag = ..
 type tag += No_tag
@@ -43,29 +44,26 @@ class resolver () =
     après sont utilisées (héritage multiple).
 *)
 
-class type collidable =
-  object
-    inherit Entity.t
-    inherit position
-    inherit box
-    inherit tagged
-    inherit resolver
-  end
+class type collidable = object
+  inherit Entity.t
+  inherit position
+  inherit box
+  inherit tagged
+  inherit resolver
+end
 
-class type drawable =
-  object
-    inherit Entity.t
-    inherit position
-    inherit box
-    inherit texture
-  end
+class type drawable = object
+  inherit Entity.t
+  inherit position
+  inherit box
+  inherit texture
+end
 
-class type movable =
-    object
-        inherit Entity.t
-        inherit position
-        inherit velocity
-    end
+class type movable = object
+  inherit Entity.t
+  inherit position
+  inherit velocity
+end
 
 (** Entités :
     Ici, dans inherit, on appelle les constructeurs pour qu'ils initialisent
