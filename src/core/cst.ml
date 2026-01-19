@@ -28,5 +28,4 @@ let block_x = 400
 let block_y = 400
 let block_width = wall_thickness * 3
 let block_height = 20
-
 let g = Vector.{ x = 0.0; y = 0.001 }

@@ -36,7 +36,10 @@ class texture () =
     method texture = r
   end
 
-type tag = No_tag | Wall | Ball
+type tag =
+  | No_tag
+  | Wall
+  | Ball
 
 class tagged () =
   let r = Component.init No_tag in
@@ -85,6 +88,7 @@ class type physics = object
   inherit mass
   inherit forces
   inherit velocity
+  inherit position
 end
 
 class type drawable = object

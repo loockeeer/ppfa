@@ -34,28 +34,38 @@ let walls () =
   List.map
     create
     Cst.
-      [ hwall1_x, hwall1_y, Vector.zero, Texture.blue, hwall_width, hwall_height, infinity,Wall
-      ; hwall2_x, hwall2_y, Vector.zero, Texture.blue, hwall_width, hwall_height, infinity,Wall
+      [ ( hwall1_x
+        , hwall1_y
+        , Vector.zero
+        , Texture.blue
+        , hwall_width
+        , hwall_height
+        , infinity
+        , Wall )
+      ; ( hwall2_x
+        , hwall2_y
+        , Vector.zero
+        , Texture.blue
+        , hwall_width
+        , hwall_height
+        , infinity
+        , Wall )
       ; ( vwall1_x
         , vwall1_y
         , Vector.zero
         , Texture.green
         , vwall_width
         , vwall_height
-        , infinity, Wall )
+        , infinity
+        , Wall )
       ; ( vwall2_x
         , vwall2_y
         , Vector.zero
         , Texture.green
         , vwall_width
         , vwall_height
-        , infinity,Wall )
-      ; (block_x,
-      block_y,
-      Vector.zero,
-      Texture.red,
-      block_width,
-      block_height,
-      500.,Ball)
+        , infinity
+        , Wall )
+      ; block_x, block_y, Vector.zero, Texture.red, block_width, block_height, 500., Ball
       ]
 ;;

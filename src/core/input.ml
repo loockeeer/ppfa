@@ -8,9 +8,22 @@ let register key action = Hashtbl.replace action_table key action
 let handle_input () =
   let () =
     match Gfx.poll_event () with
-    | KeyDown s -> set_key s
-    | KeyUp s -> unset_key s
+    | KeyDown s ->
+      set_key s;
+      if s = "g"
+      then (
+        let g = Global.get () in
+        Global.set { g with explode = true })
+    | KeyUp s ->
+      unset_key s;
+      if s = "g"
+      then (
+        let g = Global.get () in
+        Global.set { g with explode = false })
     | Quit -> exit 0
+    | MouseMove (x, y) ->
+      let g = Global.get () in
+      Global.set { g with mouse_x = x; mouse_y = y }
     | _ -> ()
   in
   Hashtbl.iter (fun key action -> if has_key key then action ()) action_table

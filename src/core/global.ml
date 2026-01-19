@@ -3,7 +3,10 @@ open Component_defs
 type t =
   { window : Gfx.window
   ; ctx : Gfx.context
-  ; last_update: float
+  ; last_update : float
+  ; mouse_x : int
+  ; mouse_y : int
+  ; explode : bool
   }
 
 let state = ref None
