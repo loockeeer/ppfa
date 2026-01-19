@@ -40,7 +40,7 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = libs ++ [pkgs.simple-http-server];
         shellHook = ''
-            simple-http-server -i -p 2131 . &> /dev/null
+            simple-http-server -i -p 2131 . &> /dev/null &
             echo "Static server at http://localhost:2131 !"
         '';
       };
