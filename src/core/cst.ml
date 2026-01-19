@@ -24,4 +24,9 @@ let vwall1_x = 0
 let vwall1_y = wall_thickness
 let vwall2_x = window_width - wall_thickness
 let vwall2_y = vwall1_y
-let g = Vector.{ x = 0.0; y = 0.00000001 }
+let block_x = 400
+let block_y = 400
+let block_width = wall_thickness * 3
+let block_height = 20
+
+let g = Vector.{ x = 0.0; y = 0.001 }

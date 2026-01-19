@@ -3,6 +3,7 @@ open Component_defs
 type t =
   { window : Gfx.window
   ; ctx : Gfx.context
+  ; last_update: float
   }
 
 let state = ref None

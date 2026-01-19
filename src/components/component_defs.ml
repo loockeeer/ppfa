@@ -36,8 +36,7 @@ class texture () =
     method texture = r
   end
 
-type tag = ..
-type tag += No_tag
+type tag = No_tag | Wall | Ball
 
 class tagged () =
   let r = Component.init No_tag in
