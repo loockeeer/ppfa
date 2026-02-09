@@ -14,6 +14,10 @@ La porte, qu'il faut passer, et le porte chapeaux, qui doit être rempli afin de
 
 5 niveaux ?
 
+## MODIFCATION DE GFX /!\
+
+La boucle est appelée avec un couple (ticks, dt) maintenant.
+
 ## Nix
 
 J'ai ajouté un flake qui permet de démarrer un environnement de développement/de

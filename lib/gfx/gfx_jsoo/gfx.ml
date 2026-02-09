@@ -267,14 +267,16 @@ let main_loop ?(limit=true) f k =
     let d = dt -. !last_dt in
     if d >= 16. then
       let () = last_dt := dt in
-      match f dt with
+      match f (dt, d) with
         None -> ignore (Js.Unsafe.global##requestAnimationFrame loop_limit)
       | Some res -> (k res)
     else loop_limit (performance_now ())
   in
   let rec loop dt =
     let dt = Js.float_of_number dt in
-    match f dt with
+    let d = dt -. !last_dt in
+    let () = last_dt := dt in
+    match f (dt, d) with
       None -> ignore (Js.Unsafe.global##requestAnimationFrame loop)
     | Some res -> (k res)
   in

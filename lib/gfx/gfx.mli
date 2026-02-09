@@ -160,7 +160,7 @@ type event =
 val poll_event : unit -> event
 (** [poll_event ()] returns the next event in the event queue. *)
 
-val main_loop : ?limit:bool -> (float -> 'a option) -> ('a -> unit) -> unit
+val main_loop : ?limit:bool -> (float * float -> 'a option) -> ('a -> unit) -> unit
 (** [main_loop f k] calls a [f] repeteadly. If the optional parameter [limit] is [true] (the default)
     then [f] is called no faster than 60 times/second. If [limit] is [false] then the function
     is called as much as possible which means:

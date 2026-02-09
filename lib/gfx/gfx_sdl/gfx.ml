@@ -374,18 +374,19 @@ let main_loop ?(limit=true) f k =
     let ticks = Int32.to_float (Sdl.get_ticks ()) in
     let dt = ticks -. last_ticks in
     if dt < 16.666 then loop_limit last_ticks else
-      match f ticks with
+      match f (ticks, dt) with
         None -> loop_limit ticks
       | Some res -> k res
   in
-  let rec loop () =
+  let rec loop last_ticks =
     let ticks = Int32.to_float (Sdl.get_ticks ()) in
-    match f ticks with
-      None -> loop ()
+    let dt = ticks -. last_ticks in
+    match f (ticks, dt) with
+      None -> loop ticks
     | Some res -> k res
   in
   if limit then loop_limit (Int32.to_float (Sdl.get_ticks()))
-  else loop ()
+  else loop (Int32.to_float (Sdl.get_ticks ()))
 
 let open_formatter path =
   let oc = open_out path in
