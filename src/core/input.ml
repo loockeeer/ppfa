@@ -20,7 +20,8 @@ let handle_input () =
 let register_map km = ()
 
 let () =
-  register "z" (fun () -> Global.update (fun g -> { g with camera_y = g.camera_y - 5 }));
+  register "z" (fun () -> 
+  Global.update (fun g -> { g with camera_y = g.camera_y - 5 }));
   register "s" (fun () -> Global.update (fun g -> { g with camera_y = g.camera_y + 5 }));
   register "q" (fun () -> Global.update (fun g -> { g with camera_x = g.camera_x - 5 }));
   register "d" (fun () -> Global.update (fun g -> { g with camera_x = g.camera_x + 5 }));

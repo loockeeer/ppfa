@@ -46,3 +46,12 @@ class block () =
     inherit box ()
     inherit texture ()
   end
+
+class player () =
+    object
+        inherit Entity.t ()
+        inherit position ()
+        inherit texture ()
+        inherit box ()
+    end
+

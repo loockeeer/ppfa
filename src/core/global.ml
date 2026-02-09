@@ -9,6 +9,7 @@ type t =
   ; camera_x : int
   ; camera_y : int
   ; camera_zoom : float
+  ; player : Component_defs.player option
   }
 
 let state = ref None
