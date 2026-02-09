@@ -2,7 +2,7 @@ let key_table = Hashtbl.create 16
 let has_key s = Hashtbl.mem key_table s
 let set_key s = Hashtbl.replace key_table s ()
 let unset_key s = Hashtbl.remove key_table s
-let action_table : (string, (float * float) -> unit) Hashtbl.t = Hashtbl.create 16
+let action_table : (string, float * float -> unit) Hashtbl.t = Hashtbl.create 16
 let register key action = Hashtbl.replace action_table key action
 
 let handle_input ticks_info =
@@ -18,12 +18,18 @@ let handle_input ticks_info =
 ;;
 
 let register_map km =
-    register Cst.(km.move_left) (fun (_, dt) ->
-        let open Global in
-        Player.move (get_player ()) { x = -. (dt *. Cst.player_speed); y = 0. });
-    register Cst.(km.move_right) (fun (_, dt) ->
-        let open Global in
-        Player.move (get_player ()) { x = dt *. Cst.player_speed; y = 0. })
+  register
+    Cst.(km.move_left)
+    (fun (_, dt) ->
+       let open Global in
+       Player.move (get_player ()) Vector.{ x = -.(dt *. Cst.player_speed); y = 0. });
+  register
+    Cst.(km.move_right)
+    (fun (_, dt) ->
+       let open Global in
+       Player.move (get_player ()) Vector.{ x = dt *. Cst.player_speed; y = 0. })
+;;
+
 let () =
   register "n" (fun _ ->
     Global.update (fun g ->

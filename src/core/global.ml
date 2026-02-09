@@ -20,9 +20,7 @@ let get () : t =
 ;;
 
 let set s = state := Some s
-
-let get_player () =
-    Option.get ((get ()).player)
+let get_player () = Option.get (get ()).player
 
 let update f =
   let g = get () in

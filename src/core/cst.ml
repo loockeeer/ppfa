@@ -1,14 +1,13 @@
 type keymap =
-  { 
-      move_left : string
-      ; move_right:  string
-      ; jump : string
-
+  { move_left : string
+  ; move_right : string
+  ; jump : string
   }
 
 let window_width = 600
 let window_height = 400
-
 let player_width = 20
 let player_height = 20
 let player_speed = 0.1
+let player_mass = 70.
+let g = Vector.{ x = 0.; y = 9.81 /. 1000. }

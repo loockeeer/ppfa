@@ -24,12 +24,34 @@ class texture () =
     method texture = r
   end
 
-type tag = No_tag
+class mass () =
+  let r = Component.init 0. in
+  object
+    method mass = r
+  end
+
+class forces () =
+  let r = Component.init Vector.zero in
+  object
+    method forces = r
+  end
+
+type tag =
+  | No_tag
+  | Hat
+  | Solid
+  | Player
 
 class tagged () =
   let r = Component.init No_tag in
   object
     method tag = r
+  end
+
+class resolver () =
+  let r = Component.init (fun (_ : Vector.t) (_ : tag) -> ()) in
+  object
+    method resolve = r
   end
 
 class type drawable = object
@@ -39,19 +61,43 @@ class type drawable = object
   inherit texture
 end
 
+class type collidable = object
+  inherit Entity.t
+  inherit tagged
+  inherit position
+  inherit box
+  inherit velocity
+  inherit mass
+end
+
+class type physics = object
+  inherit Entity.t
+  inherit tagged
+  inherit forces
+  inherit position
+  inherit velocity
+  inherit mass
+end
+
 class block () =
   object
     inherit Entity.t ()
+    inherit tagged ()
     inherit position ()
     inherit box ()
     inherit texture ()
+    inherit mass ()
+    inherit velocity ()
   end
 
 class player () =
-    object
-        inherit Entity.t ()
-        inherit position ()
-        inherit texture ()
-        inherit box ()
-    end
-
+  object
+    inherit Entity.t ()
+    inherit tagged ()
+    inherit position ()
+    inherit texture ()
+    inherit box ()
+    inherit mass ()
+    inherit velocity ()
+    inherit forces ()
+  end
