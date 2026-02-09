@@ -2,28 +2,15 @@ open System_defs
 open Component_defs
 open Ecs
 
-type keymap =
-  { move_up : string
-  ; move_down : string
-  ; move_left : string
-  ; move_right : string
-  ; attack : string
-  ; pause : string
-  ; start : string
-  ; interact : string
-  }
-
-let init dt =
+let init (_, dt) =
   Ecs.System.init_all dt;
-  Global.update (fun g -> { g with last_update = dt });
   Some ()
 ;;
 
 (* On crée une fenêtre *)
 
-let update dt =
-  let () = Input.handle_input () in
-  Global.update (fun g -> { g with last_update = dt });
+let update (ticks, dt) =
+  let () = Input.handle_input (ticks, dt) in
   Camera_system.update dt;
   None
 ;;
@@ -41,7 +28,6 @@ let run keymap =
     Global.
       { window
       ; ctx
-      ; last_update = 0.
       ; mouse_x = 0
       ; mouse_y = 0
       ; camera_x = 0

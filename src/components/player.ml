@@ -11,3 +11,6 @@ let create x y txt =
   Camera_system.(register (e :> t));
   e
 ;;
+
+let move player v =
+    player#position#set (Vector.add player#position#get v)

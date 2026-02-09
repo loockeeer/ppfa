@@ -3,7 +3,6 @@ open Component_defs
 type t =
   { window : Gfx.window
   ; ctx : Gfx.context
-  ; last_update : float
   ; mouse_x : int
   ; mouse_y : int
   ; camera_x : int
@@ -21,6 +20,9 @@ let get () : t =
 ;;
 
 let set s = state := Some s
+
+let get_player () =
+    Option.get ((get ()).player)
 
 let update f =
   let g = get () in
