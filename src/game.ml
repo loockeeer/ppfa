@@ -20,7 +20,7 @@ let update (ticks, dt) =
 
 let ( let@ ) f k = f k
 
-let run_custom window keymap =
+let run_custom window keymap images =
   let ctx = Gfx.get_context window in
   let () = Gfx.set_context_logical_size ctx 800 600 in
   let global =
@@ -33,17 +33,17 @@ let run_custom window keymap =
       ; camera_y = 0
       ; camera_zoom = 1.
       ; player = None
+      ; textures = Array.of_list (List.map (fun x -> Texture.Image x) images)
       }
   in
   Global.set global;
   Input.register_map keymap;
   Block.create (0, 550, 800, 50, Texture.black) |> ignore;
-  Player.create 400 300 Texture.red |> ignore;
+  Player.create 400 300 global.textures.(0) |> ignore;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
   ()
 ;;
-
 
 let run keys =
   let win = Gfx.create "game_canvas:800x600:" in

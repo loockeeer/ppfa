@@ -12,8 +12,7 @@ let create x y txt =
   e#forces#set (Vector.mult Cst.player_mass Cst.g);
   e#box#set Rect.{ width = Cst.player_width; height = Cst.player_height };
   e#resolve#set (fun n -> function
-    | Solid -> 
-            if n.y > 0. then e#on_ground#set true
+    | Solid -> if n.y > 0. then e#on_ground#set true
     | _ -> ());
   Global.update (fun g -> { g with player = Some e });
   Camera_system.(register (e :> t));
