@@ -20,11 +20,7 @@ let update (ticks, dt) =
 
 let ( let@ ) f k = f k
 
-let run_custom keymap =
-  let window_spec =
-    Format.sprintf "game_canvas:%dx%d:" Cst.window_width Cst.window_height
-  in
-  let window = Gfx.create window_spec in
+let run_custom window keymap =
   let ctx = Gfx.get_context window in
   let () = Gfx.set_context_logical_size ctx 800 600 in
   let global =
