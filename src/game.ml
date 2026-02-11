@@ -20,7 +20,7 @@ let update (ticks, dt) =
 
 let ( let@ ) f k = f k
 
-let run keymap =
+let run_custom keymap =
   let window_spec =
     Format.sprintf "game_canvas:%dx%d:" Cst.window_width Cst.window_height
   in
@@ -46,4 +46,27 @@ let run keymap =
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
   ()
+;;
+
+
+let run keys =
+  let win = Gfx.create "game_canvas:800x600:" in
+  let ts = Gfx.load_file "resources/files/tile_set.txt" in
+  Gfx.main_loop
+    (fun _ -> Gfx.get_resource_opt ts)
+    (fun txt1 ->
+       let res_list =
+         String.split_on_char '\n' txt1
+         |> List.filter_map (fun p ->
+           if p = ""
+           then None
+           else Some (Gfx.load_image (Gfx.get_context win) ("resources/images/" ^ p)))
+       in
+       Gfx.main_loop
+         (fun _ ->
+            let result = List.map Gfx.get_resource_opt res_list in
+            if List.for_all (( <> ) None) result
+            then Some (List.map Option.get result)
+            else None)
+         (run_custom win keys))
 ;;
