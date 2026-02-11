@@ -4,10 +4,6 @@ open Ecs
 
 let init (_, dt) =
   Ecs.System.init_all dt;
-  Camera_system.init dt;
-  Collision_system.init dt;
-  Physics_system.init dt;
-  Move_system.init dt;
   Some ()
 ;;
 
@@ -15,10 +11,10 @@ let init (_, dt) =
 
 let update (ticks, dt) =
   let () = Input.handle_input (ticks, dt) in
-  Camera_system.update dt;
   Collision_system.update dt;
-  Physics_system.update dt;
   Move_system.update dt;
+  Physics_system.update dt;
+  Camera_system.update dt;
   None
 ;;
 
@@ -45,6 +41,7 @@ let run keymap =
   in
   Global.set global;
   Input.register_map keymap;
+  Block.create (0, 550, 800, 50, Texture.black) |> ignore;
   Player.create 400 300 Texture.red |> ignore;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in

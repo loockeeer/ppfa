@@ -7,7 +7,7 @@ let create (x, y, width, height, txt) =
   e#texture#set txt;
   e#position#set Vector.{ x = float x; y = float y };
   e#box#set Rect.{ width; height };
-  e#mass#set 100.;
+  e#mass#set Float.infinity;
   e#velocity#set Vector.zero;
   e#tag#set Solid;
   Camera_system.(register (e :> t));

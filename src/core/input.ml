@@ -27,7 +27,8 @@ let register_map km =
     Cst.(km.move_right)
     (fun (_, dt) ->
        let open Global in
-       Player.move (get_player ()) Vector.{ x = dt *. Cst.player_speed; y = 0. })
+       Player.move (get_player ()) Vector.{ x = dt *. Cst.player_speed; y = 0. });
+  register Cst.(km.jump) (fun (_, dt) -> Player.jump (Global.get_player ()))
 ;;
 
 let () =

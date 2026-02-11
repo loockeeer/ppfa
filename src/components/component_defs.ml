@@ -36,6 +36,12 @@ class forces () =
     method forces = r
   end
 
+class on_ground () =
+  let r = Component.init true in
+  object
+    method on_ground = r
+  end
+
 type tag =
   | No_tag
   | Hat
@@ -68,6 +74,7 @@ class type collidable = object
   inherit box
   inherit velocity
   inherit mass
+  inherit resolver
 end
 
 class type physics = object
@@ -88,6 +95,7 @@ class block () =
     inherit texture ()
     inherit mass ()
     inherit velocity ()
+    inherit resolver ()
   end
 
 class player () =
@@ -100,4 +108,6 @@ class player () =
     inherit mass ()
     inherit velocity ()
     inherit forces ()
+    inherit resolver ()
+    inherit on_ground ()
   end
