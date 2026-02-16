@@ -34,13 +34,17 @@ let run_custom window keymap images =
       ; camera_y = 0
       ; camera_zoom = 1.
       ; player = None
-      ; textures = Array.of_list (List.map (fun x -> Texture.Image x) images)
+      ; textures = Hashtbl.create 16
       }
   in
+  List.iter
+    (fun (name, im) -> Hashtbl.add Global.(global.textures) name (Texture.Image im))
+    images;
   Global.set global;
   Input.register_map keymap;
   Block.create (0, 550, 800, 50, Texture.black) |> ignore;
-  Player.create 400 300 [| global.textures.(0); Texture.black |] |> ignore;
+  Player.create 400 300 [| Global.get_texture "extra_character_a"; Texture.black |]
+  |> ignore;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
   ()
@@ -57,13 +61,17 @@ let run keys =
          |> List.filter_map (fun p ->
            if p = ""
            then None
-           else Some (Gfx.load_image (Gfx.get_context win) ("resources/images/" ^ p)))
+           else (
+             let[@warning "-8"] (name :: _) = String.split_on_char '.' p in
+             Some (name, Gfx.load_image (Gfx.get_context win) ("resources/images/" ^ p))))
        in
        Gfx.main_loop
          (fun _ ->
-            let result = List.map Gfx.get_resource_opt res_list in
-            if List.for_all (( <> ) None) result
-            then Some (List.map Option.get result)
+            let result =
+              List.map (fun (name, x) -> name, Gfx.get_resource_opt x) res_list
+            in
+            if List.for_all (fun (_, x) -> x <> None) result
+            then Some (List.map (fun (name, x) -> name, Option.get x) result)
             else None)
          (run_custom win keys))
 ;;

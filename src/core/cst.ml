@@ -4,6 +4,10 @@ type keymap =
   ; jump : string
   }
 
+type hat_type =
+  | Hdf
+  | Fez
+
 let window_width = 600
 let window_height = 400
 let player_width = 20
@@ -17,4 +21,9 @@ let hdf_height = 20 (* à ajuster *)
 let hdf_width = 20 (* à ajuster *)
 let fez_height = 20 (* à ajuster *)
 let fez_width = 20 (* à ajuster *)
+let block_width = 20
+let block_height = 20
+let hat_stand_width = 40
+let hat_stand_height = 100
+let layer_count = 3
 let g = Vector.{ x = 0.; y = 0.005 }

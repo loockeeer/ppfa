@@ -9,7 +9,7 @@ type t =
   ; camera_y : int
   ; camera_zoom : float
   ; player : Component_defs.player option
-  ; textures : Texture.t array
+  ; textures : (string, Texture.t) Hashtbl.t
   }
 
 let state = ref None
@@ -27,3 +27,5 @@ let update f =
   let g = get () in
   set (f g)
 ;;
+
+let get_texture name = Hashtbl.find (get ()).textures name

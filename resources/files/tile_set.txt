@@ -1,1 +1,2 @@
 fez.png
+extra_character_a.png
