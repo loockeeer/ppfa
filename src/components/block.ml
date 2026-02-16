@@ -10,6 +10,7 @@ let create (x, y, width, height, txt) =
   e#mass#set Float.infinity;
   e#velocity#set Vector.zero;
   e#tag#set Solid;
+  e#layer#set 1;
   Camera_system.(register (e :> t));
   Collision_system.(register (e :> t));
   e

@@ -16,6 +16,7 @@ let create x y txt =
   e#resolve#set (fun n -> function
     | Solid -> if n.y > 0. then e#on_ground#set true
     | _ -> ());
+  e#layer#set 1;
   Global.update (fun g -> { g with player = Some e });
   Camera_system.(register (e :> t));
   Physics_system.(register (e :> t));

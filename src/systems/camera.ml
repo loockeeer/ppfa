@@ -36,6 +36,13 @@ let update _ el =
       Rect.{ width = ww; height = wh }
       (1. /. camera_zoom)
   in
+  let layers =
+    Array.init Cst.layer_count (fun i ->
+      let sf = Gfx.create_surface ctx ww wh in
+      Gfx.set_color ctx (Gfx.color 0 0 0 0);
+      Gfx.fill_rect ctx sf 0 0 ww wh;
+      sf)
+  in
   Seq.iter
     (fun (e : t) ->
        let real_pos = e#position#get in
@@ -52,7 +59,10 @@ let update _ el =
        if Rect.intersect centered_camera_pos resized_camera_box real_pos resized_box
        then (
          let txt = e#texture#get in
-         Texture.draw ctx surface resized_pos resized_box txt))
+         Texture.draw ctx layers.(e#layer#get) resized_pos resized_box txt))
     el;
+  for i = 0 to Cst.layer_count - 1 do
+    Gfx.blit ctx surface layers.(i) 0 0
+  done;
   Gfx.commit ctx
 ;;

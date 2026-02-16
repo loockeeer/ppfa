@@ -68,13 +68,19 @@ class on_ground () =
     method on_ground = r
   end
 
+class layer () =
+  let r = Component.init 0 in
+  object
+    method layer = r
+  end
+
 type hat_type =
   | Hdf
   | Fez
 
 type tag =
   | No_tag
-  | Hat of hat_type
+  | Hat of Cst.hat_type
   | Solid
   | Player
 
@@ -95,6 +101,7 @@ class type drawable = object
   inherit position
   inherit box
   inherit texture
+  inherit layer
 end
 
 class type animated = object
@@ -134,6 +141,7 @@ class block () =
     inherit mass ()
     inherit velocity ()
     inherit resolver ()
+    inherit layer ()
   end
 
 class player () =
@@ -166,4 +174,5 @@ class hat () =
     inherit forces ()
     inherit velocity ()
     inherit resolver ()
+    inherit layer ()
   end
