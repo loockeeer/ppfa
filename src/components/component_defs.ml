@@ -24,6 +24,32 @@ class texture () =
     method texture = r
   end
 
+class textures () =
+  let r : < get : Texture.t array ; set : Texture.t array -> unit > =
+    Component.init [||]
+  in
+  object
+    method textures = r
+  end
+
+class ticks () =
+  let r = Component.init 0 in
+  object
+    method ticks = r
+  end
+
+class last_ticked () =
+  let r = Component.init 0. in
+  object
+    method last_ticked = r
+  end
+
+class tick_speed () =
+  let r = Component.init 0. in
+  object
+    method tick_speed = r
+  end
+
 class mass () =
   let r = Component.init 0. in
   object
@@ -65,6 +91,14 @@ class type drawable = object
   inherit position
   inherit box
   inherit texture
+end
+
+class type animated = object
+  inherit drawable
+  inherit textures
+  inherit ticks
+  inherit last_ticked
+  inherit tick_speed
 end
 
 class type collidable = object
@@ -110,4 +144,8 @@ class player () =
     inherit forces ()
     inherit resolver ()
     inherit on_ground ()
+    inherit textures ()
+    inherit ticks ()
+    inherit last_ticked ()
+    inherit tick_speed ()
   end
