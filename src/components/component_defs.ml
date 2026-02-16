@@ -68,9 +68,13 @@ class on_ground () =
     method on_ground = r
   end
 
+type hat_type =
+  | Hdf
+  | Fez
+
 type tag =
   | No_tag
-  | Hat
+  | Hat of hat_type
   | Solid
   | Player
 
@@ -148,4 +152,17 @@ class player () =
     inherit ticks ()
     inherit last_ticked ()
     inherit tick_speed ()
+  end
+
+class chapeau () =
+  object
+    inherit Entity.t ()
+    inherit tagged ()
+    inherit texture ()
+    inherit position ()
+    inherit box ()
+    inherit mass ()
+    inherit forces ()
+    inherit velocity ()
+    inherit resolver ()
   end
