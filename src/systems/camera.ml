@@ -24,7 +24,7 @@ let zoom_centered pos box zoom =
   centered_pos, resized_box
 ;;
 
-let update _dt el =
+let update _ el =
   let Global.{ window; ctx; camera_x; camera_y; camera_zoom; _ } = Global.get () in
   let surface = Gfx.get_surface window in
   let ww, wh = Gfx.get_context_logical_size ctx in

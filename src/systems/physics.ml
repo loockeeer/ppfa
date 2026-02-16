@@ -5,7 +5,7 @@ type t = physics
 
 let init _ = ()
 
-let update dt =
+let update (_, dt) =
   Seq.iter (fun x ->
     let nv = Vector.mult (dt /. x#mass#get) x#forces#get in
     let v = x#velocity#get in

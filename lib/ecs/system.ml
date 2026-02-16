@@ -2,7 +2,7 @@ module type T =
 sig
   type t = private #Entity.t
   val init : float -> unit
-  val update : float -> t Seq.t -> unit
+  val update : (float * float) -> t Seq.t -> unit
 end
 
 module type S = sig
@@ -12,7 +12,7 @@ module type S = sig
   val init : float -> unit
   (* initializes the system. The float argument is the current time in nanoseconds. *)
 
-  val update : float -> unit
+  val update : (float * float)-> unit
   (* updates the system. The float argument is the current time in nanoseconds *)
 
   val register : t -> unit

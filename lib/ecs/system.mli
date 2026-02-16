@@ -11,7 +11,7 @@ sig
       receives the current time as argument and can initialize private data
       structures. *)
 
-  val update : float -> t Seq.t -> unit
+  val update : (float * float)-> t Seq.t -> unit
   (** An update function that can be called from the main loop. It receives
       as argument the current time and the sequence of entities registered
       against the system.
@@ -27,7 +27,7 @@ sig
   val init : float -> unit
   (** The initialization function. *)
 
-  val update : float -> unit
+  val update : (float * float)-> unit
   (** The update function. *)
 
   val register : t -> unit
@@ -49,6 +49,6 @@ val init_all : float -> unit
 (** A convenience function that calls the [init] function of
     all modules that have been created by the [Make] functor.*)
 
-val update_all : float -> unit
+val update_all : (float * float)-> unit
 (** A convenience function that calls the [update] function of
     all modules that have been created by the [Make] functor.*)
