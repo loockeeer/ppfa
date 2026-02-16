@@ -2,12 +2,12 @@ open Ecs
 open Component_defs
 open System_defs
 
-let create x y txt =
+let create layer position txt =
   let e = new player () in
   e#textures#set txt;
   e#texture#set txt.(0);
   e#tick_speed#set 50.;
-  e#position#set Vector.{ x = float x; y = float y };
+  e#position#set position;
   e#mass#set Cst.player_mass;
   e#tag#set Player;
   e#velocity#set Vector.zero;
@@ -16,7 +16,7 @@ let create x y txt =
   e#resolve#set (fun n -> function
     | Solid -> if n.y > 0. then e#on_ground#set true
     | _ -> ());
-  e#layer#set 1;
+  e#layer#set layer;
   Global.update (fun g -> { g with player = Some e });
   Camera_system.(register (e :> t));
   Physics_system.(register (e :> t));

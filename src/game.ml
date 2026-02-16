@@ -21,6 +21,52 @@ let update dt =
 
 let ( let@ ) f k = f k
 
+let layer_content =
+    "                               \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     x                              \
+     xxxxxxxxxxxx                   \
+     xxxxxxxxxx                     \
+     xxxxxxxx             xxxxxxxx  \
+     xxxxxx                         \
+     xxxxx                          \
+     xxxx                           \
+     xxx                            \
+     xx              xxxxxxxxxxxxx  \
+     x                              \
+     x     @                        \
+     xxxxxxxxxxxx                   \
+     xxxxxxxxxxxx                   \
+     xxxxxxxxxxxx                   \
+     xxxxxxxxxxxx                   \
+     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";;
+
+let lvl = Level.{
+    layers = [
+        Level.{
+            contents = layer_content;
+            offsets = 
+                let tbl = Hashtbl.create 16 in
+                Hashtbl.add tbl (Level.Named '@') (Vector.{x = 0.; y = 0.});
+                tbl
+        }
+    ];
+    camera = 1., 0, 0;
+    width = 31;
+    stride = Rect.{width = 20; height = 20};
+};;
+
 let run_custom window keymap images =
   let ctx = Gfx.get_context window in
   let () = Gfx.set_context_logical_size ctx 800 600 in
@@ -42,9 +88,13 @@ let run_custom window keymap images =
     images;
   Global.set global;
   Input.register_map keymap;
-  Block.create (0, 550, 800, 50, Texture.black) |> ignore;
-  Player.create 400 300 [| Global.get_texture "extra_character_a"; Texture.black |]
-  |> ignore;
+  Level.load (fun chr layer position ->
+    if chr = 'x' then
+        Block.create layer position Rect.{width = 20; height = 20} Texture.black |> ignore
+    else if chr = '@' then
+        Player.create layer position [|Global.get_texture "extra_character_a"|] |> ignore
+    else ()
+  ) lvl;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
   ()

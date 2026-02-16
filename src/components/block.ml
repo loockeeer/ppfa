@@ -2,15 +2,15 @@ open Ecs
 open Component_defs
 open System_defs
 
-let create (x, y, width, height, txt) =
+let create layer position rect txt =
   let e = new block () in
   e#texture#set txt;
-  e#position#set Vector.{ x = float x; y = float y };
-  e#box#set Rect.{ width; height };
+  e#position#set position;
+  e#box#set rect;
   e#mass#set Float.infinity;
   e#velocity#set Vector.zero;
   e#tag#set Solid;
-  e#layer#set 1;
+  e#layer#set layer;
   Camera_system.(register (e :> t));
   Collision_system.(register (e :> t));
   e
