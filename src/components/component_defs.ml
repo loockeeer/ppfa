@@ -152,9 +152,10 @@ class player () =
     inherit ticks ()
     inherit last_ticked ()
     inherit tick_speed ()
+    inherit layer ()
   end
 
-class chapeau () =
+class hat () =
   object
     inherit Entity.t ()
     inherit tagged ()
