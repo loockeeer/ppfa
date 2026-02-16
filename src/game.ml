@@ -39,7 +39,7 @@ let run_custom window keymap images =
   in
   Global.set global;
   Input.register_map keymap;
-  Block.create (0, 550, 800, 50, Texture.black ) |> ignore;
+  Block.create (0, 550, 800, 50, Texture.black) |> ignore;
   Player.create 400 300 [| global.textures.(0); Texture.black |] |> ignore;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in

@@ -5,7 +5,7 @@ open System_defs
 let create x y txt =
   let e = new player () in
   e#textures#set txt;
-  e#texture#set (txt.(0));
+  e#texture#set txt.(0);
   e#tick_speed#set 50.;
   e#position#set Vector.{ x = float x; y = float y };
   e#mass#set Cst.player_mass;
@@ -21,7 +21,7 @@ let create x y txt =
   Physics_system.(register (e :> t));
   Collision_system.(register (e :> t));
   Move_system.(register (e :> t));
-  Animation_system.(register (e:> t));
+  Animation_system.(register (e :> t));
   e
 ;;
 
