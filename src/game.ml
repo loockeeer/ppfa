@@ -50,22 +50,24 @@ let layer_content =
      xxxxxxxxxxxx                   \
      xxxxxxxxxxxx                   \
      xxxxxxxxxxxx                   \
-     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";;
+     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"[@@ocamlformat "disable"]
 
-let lvl = Level.{
-    layers = [
-        Level.{
-            contents = layer_content;
-            offsets = 
-                let tbl = Hashtbl.create 16 in
-                Hashtbl.add tbl (Level.Named '@') (Vector.{x = 0.; y = 0.});
-                tbl
-        }
-    ];
-    camera = 1., 0, 0;
-    width = 31;
-    stride = Rect.{width = 20; height = 20};
-};;
+let lvl =
+  Level.
+    { layers =
+        [ Level.
+            { contents = layer_content
+            ; offsets =
+                (let tbl = Hashtbl.create 16 in
+                 Hashtbl.add tbl (Level.Named '@') Vector.{ x = 0.; y = 0. };
+                 tbl)
+            }
+        ]
+    ; camera = 1., 0, 0
+    ; width = 31
+    ; stride = Rect.{ width = 20; height = 20 }
+    }
+;;
 
 let run_custom window keymap images =
   let ctx = Gfx.get_context window in
@@ -88,13 +90,18 @@ let run_custom window keymap images =
     images;
   Global.set global;
   Input.register_map keymap;
-  Level.load (fun chr layer position ->
-    if chr = 'x' then
-        Block.create layer position Rect.{width = 20; height = 20} Texture.black |> ignore
-    else if chr = '@' then
-        Player.create layer position [|Global.get_texture "extra_character_a"|] |> ignore
-    else ()
-  ) lvl;
+  Level.load
+    (fun chr layer position ->
+       if chr = 'x'
+       then
+         Block.create layer position Rect.{ width = 20; height = 20 } Texture.black
+         |> ignore
+       else if chr = '@'
+       then
+         Player.create layer position [| Global.get_texture "extra_character_a" |]
+         |> ignore
+       else ())
+    lvl;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
   ()
