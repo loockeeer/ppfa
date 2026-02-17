@@ -47,3 +47,12 @@ let load f lvl =
          layer.contents)
     lvl.layers
 ;;
+
+let pause () =
+  Collision.pause ();
+  Move.pause ();
+  Physics.pause ()
+;;
+
+let fade_in () = failwith "wip"
+let fade_out () = failwith "wip"
