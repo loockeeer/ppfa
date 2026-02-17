@@ -30,18 +30,3 @@ let register_map km =
        Player.move (get_player ()) Vector.{ x = dt *. Cst.player_speed; y = 0. });
   register Cst.(km.jump) (fun _ -> Player.jump (Global.get_player ()))
 ;;
-
-let () =
-  register "n" (fun _ ->
-    Global.update (fun g ->
-      { g with
-        camera_zoom =
-          (if g.camera_zoom < 10. then g.camera_zoom +. 0.1 else g.camera_zoom)
-      }));
-  register "m" (fun _ ->
-    Global.update (fun g ->
-      { g with
-        camera_zoom =
-          (if g.camera_zoom > 0.1 then g.camera_zoom -. 0.1 else g.camera_zoom)
-      }))
-;;
