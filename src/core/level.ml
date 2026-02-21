@@ -7,15 +7,17 @@ type selector =
 
 type layer =
   { contents : string (* the contents for this layer *)
-  ; offsets : (selector, Vector.t) Hashtbl.t
-    (* a mapping of offsets for the objets to be properly placed *)
+  ; offsets :
+      ( selector
+        , Vector.t )
+        Hashtbl.t (* a mapping of offsets for the objets to be properly placed *)
+  ; width : int (* the view to slice layers[].contents properly as a matrix *)
+  ; stride : Rect.t (* how much to advance in each direction *)
   }
 
 type level =
   { layers : layer list (* a list of layers, from back to front *)
-  ; camera : float * int * int (* zoom, position *)
-  ; width : int (* the view to slice layers[].contents properly as a matrix *)
-  ; stride : Rect.t (* how much to advance in each direction *)
+  ; camera : float * Vector.t (* zoom, position *)
   }
 
 let clear () =
@@ -31,8 +33,8 @@ let load f lvl =
     (fun layer_idx layer ->
        String.iteri
          (fun idx chr ->
-            let x = idx mod lvl.width * lvl.stride.width in
-            let y = idx / lvl.width * lvl.stride.height in
+            let x = idx mod layer.width * layer.stride.width in
+            let y = idx / layer.width * layer.stride.height in
             let position =
               match
                 ( Hashtbl.find_opt layer.offsets (Position (x, y))
@@ -45,7 +47,9 @@ let load f lvl =
             in
             f chr layer_idx position)
          layer.contents)
-    lvl.layers
+    lvl.layers;
+  let zoom, pos = lvl.camera in
+  Global.update (fun g -> { g with camera = { zoom; pos } })
 ;;
 
 let pause () =

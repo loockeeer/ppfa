@@ -1,13 +1,16 @@
 open Component_defs
 
+type camera_t =
+  { zoom : float
+  ; pos : Vector.t
+  }
+
 type t =
   { window : Gfx.window
   ; ctx : Gfx.context
   ; mouse_x : int
   ; mouse_y : int
-  ; camera_x : int
-  ; camera_y : int
-  ; camera_zoom : float
+  ; camera : camera_t
   ; player : Component_defs.player option
   ; textures : (string, Texture.t) Hashtbl.t
   }

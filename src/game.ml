@@ -61,11 +61,11 @@ let lvl =
                 (let tbl = Hashtbl.create 16 in
                  Hashtbl.add tbl (Level.Named '@') Vector.{ x = 0.; y = 0. };
                  tbl)
+            ; width = 31
+            ; stride = Rect.{ width = 20; height = 20 }
             }
         ]
-    ; camera = 1., 0, 0
-    ; width = 31
-    ; stride = Rect.{ width = 20; height = 20 }
+    ; camera = (1., Vector.{ x = 0.; y = 0. })
     }
 ;;
 
@@ -78,9 +78,7 @@ let run_custom window keymap images =
       ; ctx
       ; mouse_x = 0
       ; mouse_y = 0
-      ; camera_x = 0
-      ; camera_y = 0
-      ; camera_zoom = 1.
+      ; camera = { zoom = 1.; pos = Vector.{ x = 0.; y = 0. } }
       ; player = None
       ; textures = Hashtbl.create 16
       }

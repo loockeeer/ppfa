@@ -25,16 +25,13 @@ let zoom_centered pos box zoom =
 ;;
 
 let update _ el =
-  let Global.{ window; ctx; camera_x; camera_y; camera_zoom; _ } = Global.get () in
+  let Global.{ window; ctx; camera; _ } = Global.get () in
   let surface = Gfx.get_surface window in
   let ww, wh = Gfx.get_context_logical_size ctx in
   Gfx.set_color ctx white;
   Gfx.fill_rect ctx surface 0 0 ww wh;
   let centered_camera_pos, resized_camera_box =
-    zoom_centered
-      Vector.{ x = float camera_x; y = float camera_y }
-      Rect.{ width = ww; height = wh }
-      (1. /. camera_zoom)
+    zoom_centered camera.pos Rect.{ width = ww; height = wh } (1. /. camera.zoom)
   in
   let layers =
     Array.init Cst.layer_count (fun i ->
@@ -50,12 +47,12 @@ let update _ el =
        (* draw *)
        let resized_box =
          Rect.
-           { width = int_of_float (float real_box.width *. camera_zoom)
-           ; height = int_of_float (float real_box.height *. camera_zoom)
+           { width = int_of_float (float real_box.width *. camera.zoom)
+           ; height = int_of_float (float real_box.height *. camera.zoom)
            }
        in
        let shifted_pos = Vector.sub real_pos centered_camera_pos in
-       let resized_pos = Vector.mult camera_zoom shifted_pos in
+       let resized_pos = Vector.mult camera.zoom shifted_pos in
        if Rect.intersect centered_camera_pos resized_camera_box real_pos resized_box
        then (
          let txt = e#texture#get in
