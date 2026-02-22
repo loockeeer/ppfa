@@ -27,6 +27,10 @@
         # GFX_JSOO module's libraries
         opkgs.js_of_ocaml
         opkgs.js_of_ocaml-ppx
+
+        # Development
+        opkgs.utop
+        opkgs.ocaml-lsp
       ];
     in
     {
