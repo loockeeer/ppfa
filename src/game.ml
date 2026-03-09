@@ -10,16 +10,16 @@ let init (_, dt) =
 (* On crée une fenêtre *)
 
 let update dt =
-  Animation_system.update dt;
   let () = Input.handle_input dt in
-  Collision_system.update dt;
-  Move_system.update dt;
   Physics_system.update dt;
+  Move_system.update dt;
+  Collision_system.update dt;
   Camera_system.update dt;
+  Animation_system.update dt;
   None
 ;;
 
-let ( let@ ) f k = f k
+let ( let@ ) f = f
 
 let layer_content =
     "                               \
@@ -89,7 +89,7 @@ let run_custom window keymap images =
     images;
   Global.set global;
   Input.register_map keymap;
-  Animated_block.create_fader ();
+  Fader.create ();
   Level.pause ();
   Level.load
     (fun chr layer position ->

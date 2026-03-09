@@ -19,17 +19,3 @@ let create layer position rect txt tick_speed =
   e
 ;;
 
-let create_fader () =
-  let g = Global.get () in
-  let ww, wh = Gfx.get_context_logical_size g.ctx in
-  let fader =
-    create
-      (Cst.layer_count - 1)
-      Vector.{ x = float (-ww); y = float (-wh) }
-      Rect.{ width = 2 * ww; height = 2 * wh }
-      [| Texture.transparent |]
-      Cst.fader_tick_speed
-  in
-  fader#paused#set true;
-  Global.update (fun g -> { g with fader = Some fader })
-;;
