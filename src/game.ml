@@ -110,7 +110,7 @@ let run_custom window keymap images =
 ;;
 
 let run keys =
-  let win = Gfx.create "game_canvas:800x600:" in
+  let win = Gfx.create "game_canvtexturesas:800x600:" in
   let ts = Gfx.load_file "resources/files/tile_set.txt" in
   Gfx.main_loop
     (fun _ -> Gfx.get_resource_opt ts)
