@@ -74,6 +74,18 @@ class layer () =
     method layer = r
   end
 
+class animation_callback () =
+  let r = Component.init (fun () -> ()) in
+  object
+    method animation_callback = r
+  end
+
+class paused () =
+  let r = Component.init false in
+  object
+    method paused = r
+  end
+
 type hat_type =
   | Hdf
   | Fez
@@ -110,6 +122,8 @@ class type animated = object
   inherit ticks
   inherit last_ticked
   inherit tick_speed
+  inherit animation_callback
+  inherit paused
 end
 
 class type collidable = object
@@ -144,6 +158,17 @@ class block () =
     inherit layer ()
   end
 
+class animated_block () =
+  object
+    inherit block ()
+    inherit textures ()
+    inherit animation_callback ()
+    inherit ticks ()
+    inherit last_ticked ()
+    inherit tick_speed ()
+    inherit paused ()
+  end
+
 class player () =
   object
     inherit Entity.t ()
@@ -161,6 +186,8 @@ class player () =
     inherit last_ticked ()
     inherit tick_speed ()
     inherit layer ()
+    inherit animation_callback ()
+    inherit paused ()
   end
 
 class hat () =
