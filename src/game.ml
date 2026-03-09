@@ -40,12 +40,12 @@ let layer_content =
      xxxxxxxxxx                     \
      xxxxxxxx             xxxxxxxx  \
      xxxxxx                         \
-     xxxxx                          \
+     xxxxx  @                       \
      xxxx                           \
      xxx                            \
      xx              xxxxxxxxxxxxx  \
      x                              \
-     x     @                        \
+     x                              \
      xxxxxxxxxxxx                   \
      xxxxxxxxxxxx                   \
      xxxxxxxxxxxx                   \
