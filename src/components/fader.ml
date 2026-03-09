@@ -16,8 +16,8 @@ let create () =
   fader#texture#set Texture.transparent;
   fader#paused#set true;
   (* Make the fader span a large area to avoid aliasing issues *)
-  fader#position#set Vector.{x = float (-ww); y = float (-wh) };
-  fader#box#set Rect.{width = 2*ww; height=2*wh};
+  fader#position#set Vector.{ x = float (-ww); y = float (-wh) };
+  fader#box#set Rect.{ width = 2 * ww; height = 2 * wh };
   fader#tick_speed#set Cst.fader_tick_speed;
   (* Draw the fader on top of everything *)
   fader#layer#set (Cst.layer_count - 1);
@@ -25,4 +25,3 @@ let create () =
   Camera_system.register (fader :> drawable);
   Global.update (fun g -> { g with fader = Some fader })
 ;;
-
