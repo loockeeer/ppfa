@@ -13,6 +13,9 @@ let update (_, dt) elts =
   else
     Seq.iter
       (fun x ->
+          match x#tag#get with
+          | Player -> Printf.printf "(%f, %f)\n" Vector.(x#position#get.x) Vector.(x#position#get.y)
+          | _ -> ();
          let v = x#velocity#get in
          x#position#set (Vector.add x#position#get (Vector.mult dt v)))
       elts
