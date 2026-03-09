@@ -55,7 +55,8 @@ let load f lvl =
 let pause () =
   Collision.pause ();
   Move.pause ();
-  Physics.pause ()
+  Physics.pause ();
+  Input.pause ()
 ;;
 
 let fade_in () = failwith "wip"

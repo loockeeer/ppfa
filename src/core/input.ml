@@ -4,12 +4,14 @@ let set_key s = Hashtbl.replace key_table s ()
 let unset_key s = Hashtbl.remove key_table s
 let action_table : (string, float * float -> unit) Hashtbl.t = Hashtbl.create 16
 let register key action = Hashtbl.replace action_table key action
+let paused = ref false
+let pause () = paused := not !paused
 
 let handle_input ticks_info =
   let () =
     match Gfx.poll_event () with
-    | KeyDown s -> set_key s
-    | KeyUp s -> unset_key s
+    | KeyDown s -> if not !paused then set_key s
+    | KeyUp s -> if not !paused then unset_key s
     | Quit -> exit 0
     | MouseMove (x, y) -> Global.update (fun g -> { g with mouse_x = x; mouse_y = y })
     | _ -> ()
