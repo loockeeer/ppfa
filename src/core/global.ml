@@ -13,6 +13,7 @@ type t =
   ; camera : camera_t
   ; player : Component_defs.player option
   ; textures : (string, Texture.t) Hashtbl.t
+  ; fader : Component_defs.animated_block option
   }
 
 let state = ref None

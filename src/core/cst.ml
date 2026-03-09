@@ -27,3 +27,4 @@ let hat_stand_width = 40
 let hat_stand_height = 100
 let layer_count = 3
 let g = Vector.{ x = 0.; y = 0.005 }
+let fader_tick_speed = 0.1

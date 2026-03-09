@@ -10,12 +10,12 @@ let init (_, dt) =
 (* On crée une fenêtre *)
 
 let update dt =
+  Animation_system.update dt;
   let () = Input.handle_input dt in
   Collision_system.update dt;
   Move_system.update dt;
   Physics_system.update dt;
   Camera_system.update dt;
-  Animation_system.update dt;
   None
 ;;
 
@@ -81,6 +81,7 @@ let run_custom window keymap images =
       ; camera = { zoom = 1.; pos = Vector.{ x = 0.; y = 0. } }
       ; player = None
       ; textures = Hashtbl.create 16
+      ; fader = None
       }
   in
   List.iter
@@ -88,6 +89,8 @@ let run_custom window keymap images =
     images;
   Global.set global;
   Input.register_map keymap;
+  Animated_block.create_fader ();
+  Level.pause ();
   Level.load
     (fun chr layer position ->
        if chr = 'x'
@@ -100,6 +103,7 @@ let run_custom window keymap images =
          |> ignore
        else ())
     lvl;
+  Level.fade_out Level.pause;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
   ()

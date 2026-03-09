@@ -59,5 +59,27 @@ let pause () =
   Input.pause ()
 ;;
 
-let fade_in () = failwith "wip"
-let fade_out () = failwith "wip"
+let fader_array = Array.init 256 (fun i -> Texture.Color (Gfx.color 0 0 0 i))
+let unfader_array = Array.of_list (List.rev (Array.to_list fader_array))
+
+let fade arr cb =
+  let g = Global.get () in
+  let fader = Option.get g.fader in
+  fader#textures#set arr;
+  fader#texture#set arr.(0);
+  fader#paused#set false;
+  fader#animation_callback#set (fun () ->
+    fader#paused#set true;
+    fader#texture#set arr.(Array.length arr - 1);
+    cb ())
+;;
+
+let fade_in = fade fader_array
+let fade_out = fade unfader_array
+
+let fade_in_out f =
+  pause ();
+  fade_in (fun () ->
+    f ();
+    fade_out pause)
+;;
