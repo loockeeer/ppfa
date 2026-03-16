@@ -9,7 +9,7 @@ let create layer position txt =
   e#tick_speed#set 50.;
   e#position#set position;
   e#mass#set Cst.player_mass;
-  e#tag#set Player;
+  e#tag#set (Player None);
   e#velocity#set Vector.zero;
   e#forces#set (Vector.mult Cst.player_mass Cst.g);
   e#box#set Rect.{ width = Cst.player_width; height = Cst.player_height };

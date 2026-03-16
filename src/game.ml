@@ -99,8 +99,10 @@ let run_custom window keymap images =
          |> ignore
        else if chr = '@'
        then
-         Player.create layer position [| Global.get_texture "extra_character_a" |]
-         |> ignore
+           let hat = Hat.create 0 0 (Global.get_texture "fez") Fez in
+           let p = Player.create layer position [| Global.get_texture "extra_character_a" |] in
+           p#tag#set (Player (Some hat))
+           
        else ())
     lvl;
   Level.fade_out Level.pause;

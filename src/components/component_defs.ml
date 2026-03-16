@@ -90,11 +90,8 @@ type hat_type =
   | Hdf
   | Fez
 
-type tag =
-  | No_tag
-  | Hat of Cst.hat_type
-  | Solid
-  | Player
+type tag = ..
+type tag += No_tag | Solid
 
 class tagged () =
   let r = Component.init No_tag in
@@ -110,6 +107,7 @@ class resolver () =
 
 class type drawable = object
   inherit Entity.t
+  inherit tagged
   inherit position
   inherit box
   inherit texture
@@ -118,6 +116,7 @@ end
 
 class type animated = object
   inherit drawable
+  inherit tagged
   inherit textures
   inherit ticks
   inherit last_ticked
@@ -166,6 +165,7 @@ class fader () =
     inherit Entity.t ()
     inherit position ()
     inherit box ()
+    inherit tagged ()
     inherit layer ()
     inherit texture ()
     inherit textures ()
@@ -221,3 +221,5 @@ class hat () =
     inherit resolver ()
     inherit layer ()
   end
+
+type tag += Player of hat option
