@@ -1,5 +1,16 @@
 # Le Jeu du Chapeau
 
+## TODO
+- Régler le pb des collisions ( collisions manquées qd vitesse + double saut murs)
+- Ajouter HdF
+- Ajouter Fez
+- Ajouter Plateforme
+- Ajouter mécanisme d'attrapage du chapeau
+- Ajouter le mécanisme de «chapeau porté»
+- Ajouter le mécanisme de lancement du chapeau
+    - Il faut pour ça logger la dernière direction du joueur
+- Ajouter le mécanisme de dépôt du chapeau
+
 ## Trois chapeaux
 
 - Le **béret** qui se comporte comme une plateforme oscillante

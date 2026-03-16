@@ -18,4 +18,3 @@ let create layer position rect txt tick_speed =
   Animation_system.(register (e :> t));
   e
 ;;
-

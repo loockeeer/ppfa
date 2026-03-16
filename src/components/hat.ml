@@ -2,6 +2,8 @@ open Ecs
 open Component_defs
 open System_defs
 
+type tag += Hat of hat_type
+
 let create x y txt tag =
   let e = new hat () in
   e#texture#set txt;
@@ -18,5 +20,5 @@ let create x y txt tag =
      | Hdf -> Rect.{ width = Cst.hdf_width; height = Cst.hdf_height }
      | Fez -> Rect.{ width = Cst.fez_width; height = Cst.fez_height }
      | _ -> failwith "not a valid hat flag");
-  Collision_system.(register (e :> t))
+  e
 ;;

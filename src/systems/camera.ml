@@ -24,6 +24,28 @@ let zoom_centered pos box zoom =
   centered_pos, resized_box
 ;;
 
+let _draw
+      ctx
+      surf
+      real_pos
+      real_box
+      (camera : Global.camera_t)
+      centered_camera_pos
+      resized_camera_box
+      txt
+  =
+  let resized_box =
+    Rect.
+      { width = int_of_float (float real_box.width *. camera.zoom)
+      ; height = int_of_float (float real_box.height *. camera.zoom)
+      }
+  in
+  let shifted_pos = Vector.sub real_pos centered_camera_pos in
+  let resized_pos = Vector.mult camera.zoom shifted_pos in
+  if Rect.intersect centered_camera_pos resized_camera_box real_pos resized_box
+  then Texture.draw ctx surf resized_pos resized_box txt
+;;
+
 let update _ el =
   let Global.{ window; ctx; camera; _ } = Global.get () in
   let surface = Gfx.get_surface window in
@@ -44,19 +66,27 @@ let update _ el =
     (fun (e : t) ->
        let real_pos = e#position#get in
        let real_box = e#box#get in
-       (* draw *)
-       let resized_box =
-         Rect.
-           { width = int_of_float (float real_box.width *. camera.zoom)
-           ; height = int_of_float (float real_box.height *. camera.zoom)
-           }
-       in
-       let shifted_pos = Vector.sub real_pos centered_camera_pos in
-       let resized_pos = Vector.mult camera.zoom shifted_pos in
-       if Rect.intersect centered_camera_pos resized_camera_box real_pos resized_box
-       then (
-         let txt = e#texture#get in
-         Texture.draw ctx layers.(e#layer#get) resized_pos resized_box txt))
+       _draw
+         ctx
+         layers.(e#layer#get)
+         real_pos
+         real_box
+         camera
+         centered_camera_pos
+         resized_camera_box
+         e#texture#get;
+       match e#tag#get with
+       | Player (Some h) ->
+         _draw
+           ctx
+           layers.(h#layer#get)
+           (Vector.add Cst.hat_worn_offset real_pos)
+           h#box#get
+           camera
+           centered_camera_pos
+           resized_camera_box
+           h#texture#get
+       | _ -> ())
     el;
   for i = 0 to Cst.layer_count - 1 do
     Gfx.blit ctx surface layers.(i) 0 0
