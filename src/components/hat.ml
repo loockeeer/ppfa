@@ -20,6 +20,5 @@ let create x y txt tag =
      | Hdf -> Rect.{ width = Cst.hdf_width; height = Cst.hdf_height }
      | Fez -> Rect.{ width = Cst.fez_width; height = Cst.fez_height }
      | _ -> failwith "not a valid hat flag");
-  Collision_system.(register (e :> t));
   e
 ;;
