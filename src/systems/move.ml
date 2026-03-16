@@ -14,6 +14,6 @@ let update (_, dt) elts =
     Seq.iter
       (fun x ->
          let v = x#velocity#get in
-         x#position#set (Vector.add x#position#get (Vector.mult (min dt 17.) v)))
+         x#position#set (Vector.add x#position#get (Vector.mult dt v)))
       elts
 ;;

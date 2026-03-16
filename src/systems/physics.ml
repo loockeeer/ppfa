@@ -13,7 +13,7 @@ let update (_, dt) elts =
   else
     Seq.iter
       (fun x ->
-         let nv = Vector.mult (min dt 17. /. x#mass#get) x#forces#get in
+         let nv = Vector.mult (dt /. x#mass#get) x#forces#get in
          let v = x#velocity#get in
          x#velocity#set (Vector.add nv v))
       elts

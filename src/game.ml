@@ -9,13 +9,22 @@ let init (_, dt) =
 
 (* On crée une fenêtre *)
 
-let update dt =
-  let () = Input.handle_input dt in
-  Physics_system.update dt;
-  Move_system.update dt;
-  Collision_system.update dt;
-  Camera_system.update dt;
-  Animation_system.update dt;
+let last_ticks = ref 0.
+
+let update (ticks, dt) =
+  if !last_ticks +. 2000. < ticks
+  then (
+    Printf.printf "Current dt = %f\n" dt;
+    last_ticks := ticks);
+  for i = 0 to int_of_float (ceil dt) do
+    let dt = ticks, 1. in
+    let () = Input.handle_input dt in
+    Physics_system.update dt;
+    Move_system.update dt;
+    Collision_system.update dt
+  done;
+  Camera_system.update (ticks, dt);
+  Animation_system.update (ticks, dt);
   None
 ;;
 
