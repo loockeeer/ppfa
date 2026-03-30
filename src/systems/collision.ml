@@ -30,6 +30,15 @@ let update _ elts =
            if Rect.has_origin s_pos s_rect
            then (
              let n = Rect.penetration_vector s_pos s_rect in
+             if match (e1#tag#get), (e2#tag#get) with
+             | Solid(s), _ -> if s.disable_bot then n.y >= 0.
+             else if s.disable_top then n.y < 0.
+             else true
+             | _, Solid(s) -> 
+                     if s.disable_bot then n.y <0. 
+                     else if s.disable_top then n.y >= 0.
+                     else true
+             | _ -> true then
              let r = Vector.norm e1#velocity#get +. Vector.norm e2#velocity#get in
              let n1, n2 =
                if Float.is_infinite m1

@@ -101,11 +101,14 @@ let run_custom window keymap images =
   Fader.create ();
   Level.pause ();
   Level.load
-    (fun chr layer position ->
+    (fun chr layer position (str_x, str_y) ->
        if chr = 'x'
        then
-         Block.create layer position Rect.{ width = 20; height = 20 } Texture.black
-         |> ignore
+           let disable_top = Level.probe lvl layer str_x (str_y - 1) = Some 'x' in
+           let disable_bot = Level.probe lvl layer str_x (str_y + 1) = Some 'x' in
+            Printf.printf "(%d, %d) : (%b, %b)\n" str_x str_y disable_top disable_bot;
+           let b = Block.create layer position Rect.{ width = 20; height = 20 } (if disable_top && disable_bot then Texture.red else if disable_bot then Texture.blue else Texture.green) in
+        b#tag#set (Solid {disable_top; disable_bot})
        else if chr = '@'
        then (
          let hat = Hat.create 0 0 (Global.get_texture "fez") Fez in

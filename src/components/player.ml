@@ -14,7 +14,7 @@ let create layer position txt =
   e#forces#set (Vector.mult Cst.player_mass Cst.g);
   e#box#set Rect.{ width = Cst.player_width; height = Cst.player_height };
   e#resolve#set (fun n -> function
-    | Solid -> if n.y > 0. then e#on_ground#set true
+    | Solid ({disable_top; disable_bot}) when n.y > 0. && not disable_top -> e#on_ground#set true
     | _ -> ());
   e#layer#set layer;
   Global.update (fun g -> { g with player = Some e });
