@@ -17,7 +17,7 @@ let update (ticks, dt) =
     Printf.printf "Current dt = %f\n" dt;
     last_ticks := ticks);
   for i = 0 to int_of_float (ceil dt) do
-    let dt = ticks, (dt /. (ceil dt)) in
+    let dt = ticks, dt /. ceil dt in
     let () = Input.handle_input dt in
     Physics_system.update dt;
     Move_system.update dt;
@@ -44,14 +44,14 @@ let layer_content =
      x                              \
      x                              \
      x                              \
-     x                              \
+     x                 x            \
      xxxxxxxxxxxx                   \
      xxxxxxxxxx                     \
      xxxxxxxx             xxxxxxxx  \
      xxxxxx                         \
-     xxxxx  @                       \
+     xxxxx  @         x             \
      xxxx                           \
-     xxx                            \
+     xxx                   f        \
      xx              xxxxxxxxxxxxx  \
      x                              \
      x                              \
@@ -111,12 +111,15 @@ let run_custom window keymap images =
         b#tag#set (Solid {disable_top; disable_bot})
        else if chr = '@'
        then (
-         let hat = Hat.create 0 0 (Global.get_texture "fez") Fez in
+         let hat = Hat.create 0. 0. layer (Global.get_texture "fez") Fez in
          let p =
            Player.create layer position [| Global.get_texture "extra_character_a" |]
          in
          p#tag#set (Player (Some hat)))
-       else ())
+        else if chr = 'f' then (
+        ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez);
+       )
+      else ())
     lvl;
   Level.fade_out Level.pause;
   let@ () = Gfx.main_loop ~limit:false init in
