@@ -89,6 +89,7 @@ class paused () =
 type hat_type =
   | Hdf
   | Fez
+  | Beret
 
 type tag = ..
 

@@ -36,6 +36,7 @@ let create x y layer txt tag =
     (match[@warning "-11"] tag with
      | Hdf -> Rect.{ width = Cst.hdf_width; height = Cst.hdf_height }
      | Fez -> Rect.{ width = Cst.fez_width; height = Cst.fez_height }
+     | Beret -> Rect.{ width = Cst.beret_width; height = Cst.beret_height }
      | _ -> failwith "not a valid hat flag");
   register e;
   e

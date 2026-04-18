@@ -21,10 +21,12 @@ let hat_spawn_player_offset = Vector.{ x = 0.; y = -5. }
 let hat_spawn_velocity_mag = 10.
 
 (* hdf : haut de forme *)
-let hdf_height = 20 (* à ajuster *)
-let hdf_width = 20 (* à ajuster *)
-let fez_height = 20 (* à ajuster *)
-let fez_width = 20 (* à ajuster *)
+let hdf_height = 16 (* à ajuster 16 *)
+let hdf_width = 15 (* à ajuster 15 *)
+let fez_height = 12 (* à ajuster 8 *)
+let fez_width = 22 (* à ajuster 15 *)
+let beret_height = 16 (* à ajuster 8 *)
+let beret_width = 30 (* à ajuster 15*)
 let block_width = 20
 let block_height = 20
 let hat_stand_width = 40
