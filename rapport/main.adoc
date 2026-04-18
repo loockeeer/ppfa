@@ -1,0 +1,36 @@
+= Rapport de Projet de PFA
+:author_1: Lucas Rooy
+:email_1: <lucas.rooy@universite-paris-saclay.fr>
+:author_2: Sacha Le Hir Mazé 
+:email_2: <sacha.le-hir-maze@universite-paris-saclay.fr>
+:doctype: book
+
+// Une présentation de votre jeu et un manuel d'utilisation (~ 3 pages)
+== Présentation du Jeu et tutoriel
+include::presentation-jeu.adoc[leveloffset=1]
+
+// Une présentation générale de l'architecture du 
+// code et les types principaux (~ 2 pages)
+== Présentation du Code
+include::presentation-code.adoc[leveloffset=1]
+
+// La présentation d'un point technique (2 points techniques pour les binômes), 
+// la façon dont vous l'avez abordé et son implémentation (avec des extraits 
+// de codes). Cela peut être un problème algorithmique (présenter les 
+// algos/structures de données utilisées), un problème d'architecture de code 
+// (dire comment vous avez encapsulé etc…), … (2 pages par point)
+== Présentation de deux points techniques
+=== XYZ
+include::presentation-point-technique-1.adoc[leveloffset=2]
+=== X'Y'Z'
+include::presentation-point-technique-2.adoc[leveloffset=2]
+
+// Les tests effectués (i.e. comment vous avez testé tout 
+// au long du développement), (2 pages)
+== Méthodologie de tests
+include::tests-effectues.adoc[leveloffset=1]
+
+// La répartition du travail au sein du binôme 
+// (uniquement si vous étiez en binôme, 1 page)
+== Répartition du travail
+include::repartition-travail.adoc[leveloffset=1]

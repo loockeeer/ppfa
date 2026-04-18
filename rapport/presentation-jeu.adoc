@@ -1,0 +1,7 @@
+Il s'agit d'un jeu de puzzle, basé sur des chapeaux que l'on peut prendre en main et lancer, en pouvant se servir de leurs effets.
+
+Il existe trois chapeaux différents dans le jeu :
+
+* Le fez lorsque lancé contre une surface
+* Le haut-de-forme que l'on peut utiliser comme trampoline
+* Le béret qui se comporte comme une plateforme volante
