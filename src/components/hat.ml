@@ -33,11 +33,10 @@ let create x y layer txt tag =
   e#tag#set (Hat tag);
   e#layer#set layer;
   e#box#set
-    (match[@warning "-11"] tag with
+    (match tag with
      | Hdf -> Rect.{ width = Cst.hdf_width; height = Cst.hdf_height }
      | Fez -> Rect.{ width = Cst.fez_width; height = Cst.fez_height }
-     | Beret -> Rect.{ width = Cst.beret_width; height = Cst.beret_height }
-     | _ -> failwith "not a valid hat flag");
+     | Beret -> Rect.{ width = Cst.beret_width; height = Cst.beret_height });
   register e;
   e
 ;;

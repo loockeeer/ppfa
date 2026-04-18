@@ -43,7 +43,6 @@ let level_0 =
     }
 ;;
 
-
 (* Level 1 *)
 
 let layer_content_0_1 =

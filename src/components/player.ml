@@ -46,5 +46,5 @@ let throw player hat =
   Hat.register hat;
   (Global.get_player ())#tag#set (Component_defs.Player None);
   hat#position#set (Vector.add Cst.hat_spawn_player_offset player#position#get);
-  hat#position#set (Vector.mult Cst.hat_spawn_velocity_mag Vector.zero)
+  hat#position#set (Vector.mult Cst.hat_spawn_velocity_mag player#velocity#get)
 ;;

@@ -16,7 +16,7 @@ let player_height = 20
 let player_speed = 0.4
 let player_mass = 1.
 let player_jump_speed = 1.
-let max_hat_pickup_norm = player_width |> float
+let max_hat_pickup_norm = player_width * 2 |> float
 let hat_spawn_player_offset = Vector.{ x = 0.; y = -5. }
 let hat_spawn_velocity_mag = 10.
 

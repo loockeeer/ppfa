@@ -35,8 +35,10 @@ let probe lvl layer x y =
     let idx = x + (layer.width * y) in
     if idx >= String.length layer.contents then None else Some layer.contents.[idx]
   | None -> None
+;;
 
 let f lvl =
+
   (fun chr layer position (str_x, str_y) ->
        if chr = 'x'
        then (

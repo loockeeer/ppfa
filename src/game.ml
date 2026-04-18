@@ -16,8 +16,8 @@ let update (ticks, dt) =
   then (
     Printf.printf "Current dt = %f\n" dt;
     last_ticks := ticks);
-  for i = 0 to int_of_float (ceil dt) do
-    let dt = ticks, dt /. ceil dt in
+  for i = 0 to int_of_float (ceil (dt /. 5.)) do
+    let dt = ticks, dt /. (ceil (dt /. 5.)) in
     let () = Input.handle_input dt in
     Physics_system.update dt;
     Move_system.update dt;
