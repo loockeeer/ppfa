@@ -91,7 +91,13 @@ type hat_type =
   | Fez
 
 type tag = ..
-type tag += No_tag | Solid of {disable_top: bool; disable_bot: bool}
+
+type tag +=
+  | No_tag
+  | Solid of
+      { disable_top : bool
+      ; disable_bot : bool
+      }
 
 class tagged () =
   let r = Component.init No_tag in

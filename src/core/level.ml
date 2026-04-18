@@ -29,12 +29,12 @@ let clear () =
 ;;
 
 let probe lvl layer x y =
-    match List.nth_opt lvl.layers layer with
-    | Some layer ->
-    let idx = x+ layer.width*y in
-    if idx >= String.length layer.contents then None
-    else Some(layer.contents.[idx])
-    | None -> None
+  match List.nth_opt lvl.layers layer with
+  | Some layer ->
+    let idx = x + (layer.width * y) in
+    if idx >= String.length layer.contents then None else Some layer.contents.[idx]
+  | None -> None
+;;
 
 let load f lvl =
   List.iteri
@@ -53,7 +53,7 @@ let load f lvl =
                 (* precedence made obvious here *)
                 Vector.add v Vector.{ x = float x; y = float y }
             in
-            f chr layer_idx position (x/layer.stride.width,y/layer.stride.height))
+            f chr layer_idx position (x / layer.stride.width, y / layer.stride.height))
          layer.contents)
     lvl.layers;
   let zoom, pos = lvl.camera in

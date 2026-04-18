@@ -5,6 +5,8 @@ type t =
   ; height : int
   }
 
+let get_center r = Vector.add { x = float r.width /. 2.; y = float r.height /. 2. }
+
 let mdiff v1 r1 v2 r2 =
   ( Vector.{ x = v2.x -. v1.x -. float r1.width; y = v2.y -. v1.y -. float r1.height }
   , { width = r1.width + r2.width; height = r1.height + r2.height } )

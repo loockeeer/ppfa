@@ -30,34 +30,41 @@ let update _ elts =
            if Rect.has_origin s_pos s_rect
            then (
              let n = Rect.penetration_vector s_pos s_rect in
-             if match (e1#tag#get), (e2#tag#get) with
-             | Solid(s), _ -> if s.disable_bot then n.y >= 0.
-             else if s.disable_top then n.y < 0.
-             else true
-             | _, Solid(s) -> 
-                     if s.disable_bot then n.y <0. 
-                     else if s.disable_top then n.y >= 0.
-                     else true
-             | _ -> true then
-             let r = Vector.norm e1#velocity#get +. Vector.norm e2#velocity#get in
-             let n1, n2 =
-               if Float.is_infinite m1
-               then 0.0, 1.0
-               else if Float.is_infinite m2
-               then 1.0, 0.0
-               else if e1#velocity#get = Vector.zero && e2#velocity#get = Vector.zero
-               then 0.5, 0.5
-               else Vector.norm e1#velocity#get /. r, Vector.norm e2#velocity#get /. r
-             in
-             e1#position#set (Vector.add e1#position#get (Vector.mult n1 n));
-             e2#position#set (Vector.sub e2#position#get (Vector.mult n2 n));
-             let n = Vector.normalize n in
-             let v = Vector.sub e1#velocity#get e2#velocity#get in
-             let e = 0. in
-             let j = -.(1. +. e) /. ((1. /. m1) +. (1. /. m2)) *. Vector.dot v n in
-             e1#velocity#set (Vector.add e1#velocity#get (Vector.mult (j /. m1) n));
-             e2#velocity#set (Vector.sub e2#velocity#get (Vector.mult (j /. m2) n));
-             e2#resolve#get n e1#tag#get;
-             e1#resolve#get (Vector.mult (-1.) n) e2#tag#get)))
+             if
+               match e1#tag#get, e2#tag#get with
+               | Solid s, _ ->
+                 if s.disable_bot
+                 then n.y >= 0.
+                 else if s.disable_top
+                 then n.y < 0.
+                 else true
+               | _, Solid s ->
+                 if s.disable_bot
+                 then n.y < 0.
+                 else if s.disable_top
+                 then n.y >= 0.
+                 else true
+               | _ -> true
+             then (
+               let r = Vector.norm e1#velocity#get +. Vector.norm e2#velocity#get in
+               let n1, n2 =
+                 if Float.is_infinite m1
+                 then 0.0, 1.0
+                 else if Float.is_infinite m2
+                 then 1.0, 0.0
+                 else if e1#velocity#get = Vector.zero && e2#velocity#get = Vector.zero
+                 then 0.5, 0.5
+                 else Vector.norm e1#velocity#get /. r, Vector.norm e2#velocity#get /. r
+               in
+               e1#position#set (Vector.add e1#position#get (Vector.mult n1 n));
+               e2#position#set (Vector.sub e2#position#get (Vector.mult n2 n));
+               let n = Vector.normalize n in
+               let v = Vector.sub e1#velocity#get e2#velocity#get in
+               let e = 0. in
+               let j = -.(1. +. e) /. ((1. /. m1) +. (1. /. m2)) *. Vector.dot v n in
+               e1#velocity#set (Vector.add e1#velocity#get (Vector.mult (j /. m1) n));
+               e2#velocity#set (Vector.sub e2#velocity#get (Vector.mult (j /. m2) n));
+               e2#resolve#get n e1#tag#get;
+               e1#resolve#get (Vector.mult (-1.) n) e2#tag#get))))
       elts
 ;;
