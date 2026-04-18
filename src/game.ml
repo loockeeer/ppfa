@@ -53,7 +53,7 @@ let run_custom window keymap images =
   Input.register_map keymap;
   Fader.create ();
   Level.pause ();
-  Level.load Level.f Levels_content.level_1;
+  Level.load Level.f Levels_content.level_0;
   Level.fade_out Level.pause;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
