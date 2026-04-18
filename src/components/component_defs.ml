@@ -229,4 +229,15 @@ class hat () =
     inherit layer ()
   end
 
+class pc () =
+  object
+    inherit Entity.t ()
+    inherit tagged ()
+    inherit texture ()
+    inherit position ()
+    inherit box ()
+    inherit resolver ()
+    inherit layer ()
+  end
+
 type tag += Player of hat option

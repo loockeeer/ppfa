@@ -43,7 +43,9 @@ let run_custom window keymap images =
       ; player = None
       ; textures = Hashtbl.create 16
       ; fader = None
+      ; pc = None
       ; wild_hats = []
+      ; level = 0;
       }
   in
   List.iter
@@ -52,9 +54,9 @@ let run_custom window keymap images =
   Global.set global;
   Input.register_map keymap;
   Fader.create ();
-  Level.pause ();
-  Level.load Level.f Levels_content.level_0;
-  Level.fade_out Level.pause;
+  Global.freeze ();
+  Level.load Level.f Levels_content.levels.(global.level);
+  Level.fade_out Global.freeze;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
   ()
