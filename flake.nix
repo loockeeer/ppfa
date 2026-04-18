@@ -33,7 +33,7 @@
         opkgs.ocaml-lsp
 
 		# Rapport
-		pkgs.asciidoctor
+		pkgs.asciidoctor-with-extensions
       ];
     in
     {
