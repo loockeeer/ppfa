@@ -26,7 +26,8 @@ let clear () =
   Animation_system.reset ();
   Move_system.reset ();
   Physics_system.reset ();
-  Camera_system.reset ()
+  Camera_system.reset ();
+  Global.update (fun g -> { g with wild_hats = []})
 ;;
 
 let probe lvl layer x y =
@@ -57,9 +58,9 @@ let f lvl =
          p#tag#set (Player None))
        else if chr = 'f'
        then Hat.create position.x position.y layer (Global.get_texture "fez") Fez
-       else if chr = 'b'
-       then Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
        else if chr = 'h'
+       then Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
+       else if chr = 'b'
        then Hat.create position.x position.y layer (Global.get_texture "beret") Beret
        else if chr = 'p'
        then Pc.create position.x position.y layer (Global.get_texture "pc")

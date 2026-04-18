@@ -1,35 +1,30 @@
 (* Level 1 *)
 
-let layer_content =
-    "                               \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                 x            \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxx                     \
-     xxxxxxxx             xxxxxxxx  \
-     xxxxxx                         \
-     xxxxx  @         x             \
-     xxxx                           \
-     xxx                   f        \
-     xx              xxxxxxxxxxxxx  \
-     x                              \
-     x                              \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"[@@ocamlformat "disable"]
+let layer_content = "\
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                 p     \
+x                                       \
+x                          xxxxxxxxxxxxx\
+x                          x            \
+x               @          x            \
+x                          x            \
+x      h                   x            \
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       \
+x                                       "[@@ocamlformat "disable"]
 
 let level =
   Level.
@@ -40,7 +35,7 @@ let level =
                 (let tbl = Hashtbl.create 16 in
                  Hashtbl.add tbl (Level.Named '@') Vector.{ x = 0.; y = 0. };
                  tbl)
-            ; width = 31
+            ; width = 40
             ; stride = Rect.{ width = 20; height = 20 }
             }
         ]
