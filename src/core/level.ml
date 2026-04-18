@@ -40,19 +40,12 @@ let f lvl =
   (fun chr layer position (str_x, str_y) ->
        if chr = 'x'
        then (
-         let disable_top = probe lvl layer str_x (str_y - 1) = Some 'x' in
-         let disable_bot = probe lvl layer str_x (str_y + 1) = Some 'x' in
-         Printf.printf "(%d, %d) : (%b, %b)\n" str_x str_y false false;
          let b =
            Block.create
              layer
              position
              Rect.{ width = 20; height = 20 }
-             (if disable_top && disable_bot
-              then Texture.red
-              else if disable_bot
-              then Texture.blue
-              else Texture.green)
+             Texture.black
          in
          b#tag#set (Solid { disable_top = false; disable_bot = false }))
        else if chr = '@'
