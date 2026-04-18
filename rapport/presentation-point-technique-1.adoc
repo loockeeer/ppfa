@@ -24,9 +24,8 @@ frame. Supposons qu'entre deux appels à ``update`` se soient passées
 en précision.
 
 Bien sûr, cette approche possède des inconvénients, dont un particulièrement 
-visible : son impact sur les performances non négligeable.
-
-Le code est aujourd'hui :
+visible : son impact sur les performances non négligeable, pour y pallier, nous
+divisons par ``5`` le nombre de pas.
 
 .game.ml (après)
 [source,ocaml]
@@ -38,8 +37,8 @@ let update (ticks, dt) =
   then (
     Printf.printf "Current dt = %f\n" dt;
     last_ticks := ticks);
-  for i = 0 to int_of_float (ceil dt) do
-    let dt = ticks, dt /. ceil dt in
+  for i = 0 to int_of_float (ceil (dt /. 5.)) do
+    let dt = ticks, dt /. ceil (dt /. 5.) in
     let () = Input.handle_input dt in
     Physics_system.update dt;
     Move_system.update dt;
