@@ -1,0 +1,5 @@
+=== Préambule : Modification de Gfx
+
+La boucle est appelée avec un couple ``(ticks, dt)`` (le nombre de ticks (unité
+pas importante) depuis le début du jeu, le nombre de ticks depuis la dernière
+actualisation). C'est plus pratique.

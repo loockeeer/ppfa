@@ -99,6 +99,7 @@ type tag +=
       { disable_top : bool
       ; disable_bot : bool
       }
+  | Hat of hat_type
 
 class tagged () =
   let r = Component.init No_tag in

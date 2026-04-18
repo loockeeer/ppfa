@@ -1,9 +1,10 @@
 = Rapport de Projet de PFA
 :author_1: Lucas Rooy
-:email_1: <lucas.rooy@universite-paris-saclay.fr>
+:email_1: lucas.rooy@universite-paris-saclay.fr
 :author_2: Sacha Le Hir Mazé 
-:email_2: <sacha.le-hir-maze@universite-paris-saclay.fr>
+:email_2: sacha.le-hir-maze@universite-paris-saclay.fr
 :source-highlighter: rouge
+:!outline:
 :doctype: book
 
 // Une présentation de votre jeu et un manuel d'utilisation (~ 3 pages)
