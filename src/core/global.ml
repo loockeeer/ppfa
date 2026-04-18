@@ -14,6 +14,7 @@ type t =
   ; player : Component_defs.player option
   ; textures : (string, Texture.t) Hashtbl.t
   ; fader : Component_defs.fader option
+  ; wild_hats : Component_defs.hat list
   }
 
 let state = ref None

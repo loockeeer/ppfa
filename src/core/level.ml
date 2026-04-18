@@ -28,6 +28,14 @@ let clear () =
   Camera_system.reset ()
 ;;
 
+let probe lvl layer x y =
+  match List.nth_opt lvl.layers layer with
+  | Some layer ->
+    let idx = x + (layer.width * y) in
+    if idx >= String.length layer.contents then None else Some layer.contents.[idx]
+  | None -> None
+;;
+
 let load f lvl =
   List.iteri
     (fun layer_idx layer ->
@@ -45,7 +53,7 @@ let load f lvl =
                 (* precedence made obvious here *)
                 Vector.add v Vector.{ x = float x; y = float y }
             in
-            f chr layer_idx position)
+            f chr layer_idx position (x / layer.stride.width, y / layer.stride.height))
          layer.contents)
     lvl.layers;
   let zoom, pos = lvl.camera in
@@ -59,7 +67,7 @@ let pause () =
   Input.pause ()
 ;;
 
-let fader_array = Array.init 256 (fun i -> Texture.Color (Gfx.color 0 0 0 i))
+let fader_array = Array.init 255 (fun i -> Texture.Color (Gfx.color 0 0 0 i))
 let unfader_array = Array.of_list (List.rev (Array.to_list fader_array))
 
 let fade arr cb =

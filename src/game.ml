@@ -91,6 +91,7 @@ let run_custom window keymap images =
       ; player = None
       ; textures = Hashtbl.create 16
       ; fader = None
+      ; wild_hats = []
       }
   in
   List.iter
@@ -101,22 +102,33 @@ let run_custom window keymap images =
   Fader.create ();
   Level.pause ();
   Level.load
-    (fun chr layer position ->
+    (fun chr layer position (str_x, str_y) ->
        if chr = 'x'
-       then
-         Block.create layer position Rect.{ width = 20; height = 20 } Texture.black
-         |> ignore
+       then (
+         let disable_top = Level.probe lvl layer str_x (str_y - 1) = Some 'x' in
+         let disable_bot = Level.probe lvl layer str_x (str_y + 1) = Some 'x' in
+         Printf.printf "(%d, %d) : (%b, %b)\n" str_x str_y false false;
+         let b =
+           Block.create
+             layer
+             position
+             Rect.{ width = 20; height = 20 }
+             (if disable_top && disable_bot
+              then Texture.red
+              else if disable_bot
+              then Texture.blue
+              else Texture.green)
+         in
+         b#tag#set (Solid { disable_top = false; disable_bot = false }))
        else if chr = '@'
        then (
-         let hat = Hat.create 0. 0. layer (Global.get_texture "fez") Fez in
          let p =
            Player.create layer position [| Global.get_texture "extra_character_a" |]
          in
-         p#tag#set (Player (Some hat)))
-        else if chr = 'f' then (
-        ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez);
-       )
-      else ())
+         p#tag#set (Player None))
+       else if chr = 'f'
+       then ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez)
+       else ())
     lvl;
   Level.fade_out Level.pause;
   let@ () = Gfx.main_loop ~limit:false init in

@@ -30,5 +30,37 @@ let register_map km =
     (fun (_, dt) ->
        let open Global in
        Player.move (get_player ()) Vector.{ x = dt *. Cst.player_speed; y = 0. });
-  register Cst.(km.jump) (fun _ -> Player.jump (Global.get_player ()))
+  register Cst.(km.jump) (fun _ -> Player.jump (Global.get_player ()));
+  register
+    Cst.(km.hat_interact)
+    (fun _ ->
+       match (Global.get_player ())#tag#get with
+       | Component_defs.Player (Some hat) ->
+         (* Throwing logic here *)
+         (* First we get the players looking direction *)
+         (* Then we spawn the hat IRL and etc *)
+         Player.throw (Global.get_player ()) hat
+       | _ ->
+         (* Pickup logic here *)
+         let nearest source others =
+           List.fold_left
+             (fun acc current ->
+                let new_norm =
+                  Vector.(
+                    norm
+                      (sub
+                         (Rect.get_center source#box#get source#position#get)
+                         (Rect.get_center current#box#get current#position#get)))
+                in
+                match acc with
+                | Some (x, v) -> if new_norm < v then Some (current, new_norm) else acc
+                | None -> Some (current, new_norm))
+             None
+             others
+         in
+         (match nearest (Global.get_player ()) (Global.get ()).wild_hats with
+          | Some (nearest_hat, norm) ->
+            if norm <= Cst.max_hat_pickup_norm
+            then Player.grab (Global.get_player ()) nearest_hat
+          | None -> ()))
 ;;
