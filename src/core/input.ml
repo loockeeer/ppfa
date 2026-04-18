@@ -13,14 +13,12 @@ let action_table : (register_type * string, float * float -> unit) Hashtbl.t =
 ;;
 
 let register key action = Hashtbl.replace action_table key action
-let paused = ref false
-let pause () = paused := not !paused
 
 let handle_input ticks_info =
   let () =
     match Gfx.poll_event () with
     | KeyDown s ->
-      if not !paused
+      if not !Global.frozen
       then (
         Hashtbl.iter
           (fun key action ->
@@ -30,7 +28,7 @@ let handle_input ticks_info =
           action_table;
         set_key s)
     | KeyUp s ->
-      if not !paused
+      if not !Global.frozen
       then (
         unset_key s;
         Hashtbl.iter
