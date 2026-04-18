@@ -1,5 +1,6 @@
 open Ecs
 open System_defs
+open Component_defs
 
 type selector =
   | Position of (int * int)
@@ -34,6 +35,35 @@ let probe lvl layer x y =
     let idx = x + (layer.width * y) in
     if idx >= String.length layer.contents then None else Some layer.contents.[idx]
   | None -> None
+
+let f lvl =
+  (fun chr layer position (str_x, str_y) ->
+       if chr = 'x'
+       then (
+         let disable_top = probe lvl layer str_x (str_y - 1) = Some 'x' in
+         let disable_bot = probe lvl layer str_x (str_y + 1) = Some 'x' in
+         Printf.printf "(%d, %d) : (%b, %b)\n" str_x str_y false false;
+         let b =
+           Block.create
+             layer
+             position
+             Rect.{ width = 20; height = 20 }
+             (if disable_top && disable_bot
+              then Texture.red
+              else if disable_bot
+              then Texture.blue
+              else Texture.green)
+         in
+         b#tag#set (Solid { disable_top = false; disable_bot = false }))
+       else if chr = '@'
+       then (
+         let p =
+           Player.create layer position [| Global.get_texture "extra_character_a" |]
+         in
+         p#tag#set (Player None))
+       else if chr = 'f'
+       then ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez)
+       else ())
 ;;
 
 let load f lvl =
@@ -53,7 +83,7 @@ let load f lvl =
                 (* precedence made obvious here *)
                 Vector.add v Vector.{ x = float x; y = float y }
             in
-            f chr layer_idx position (x / layer.stride.width, y / layer.stride.height))
+            f lvl chr layer_idx position (x / layer.stride.width, y / layer.stride.height))
          layer.contents)
     lvl.layers;
   let zoom, pos = lvl.camera in

@@ -30,54 +30,6 @@ let update (ticks, dt) =
 
 let ( let@ ) f = f
 
-let layer_content =
-    "                               \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                              \
-     x                 x            \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxx                     \
-     xxxxxxxx             xxxxxxxx  \
-     xxxxxx                         \
-     xxxxx  @         x             \
-     xxxx                           \
-     xxx                   f        \
-     xx              xxxxxxxxxxxxx  \
-     x                              \
-     x                              \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxx                   \
-     xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"[@@ocamlformat "disable"]
-
-let lvl =
-  Level.
-    { layers =
-        [ Level.
-            { contents = layer_content
-            ; offsets =
-                (let tbl = Hashtbl.create 16 in
-                 Hashtbl.add tbl (Level.Named '@') Vector.{ x = 0.; y = 0. };
-                 tbl)
-            ; width = 31
-            ; stride = Rect.{ width = 20; height = 20 }
-            }
-        ]
-    ; camera = (1., Vector.{ x = 0.; y = 0. })
-    }
-;;
-
 let run_custom window keymap images =
   let ctx = Gfx.get_context window in
   let () = Gfx.set_context_logical_size ctx 800 600 in
@@ -101,35 +53,7 @@ let run_custom window keymap images =
   Input.register_map keymap;
   Fader.create ();
   Level.pause ();
-  Level.load
-    (fun chr layer position (str_x, str_y) ->
-       if chr = 'x'
-       then (
-         let disable_top = Level.probe lvl layer str_x (str_y - 1) = Some 'x' in
-         let disable_bot = Level.probe lvl layer str_x (str_y + 1) = Some 'x' in
-         Printf.printf "(%d, %d) : (%b, %b)\n" str_x str_y false false;
-         let b =
-           Block.create
-             layer
-             position
-             Rect.{ width = 20; height = 20 }
-             (if disable_top && disable_bot
-              then Texture.red
-              else if disable_bot
-              then Texture.blue
-              else Texture.green)
-         in
-         b#tag#set (Solid { disable_top = false; disable_bot = false }))
-       else if chr = '@'
-       then (
-         let p =
-           Player.create layer position [| Global.get_texture "extra_character_a" |]
-         in
-         p#tag#set (Player None))
-       else if chr = 'f'
-       then ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez)
-       else ())
-    lvl;
+  Level.load Level.f Levels_content.level_0;
   Level.fade_out Level.pause;
   let@ () = Gfx.main_loop ~limit:false init in
   let@ () = Gfx.main_loop update in
