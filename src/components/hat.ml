@@ -2,7 +2,6 @@ open Ecs
 open Component_defs
 open System_defs
 
-type tag += Hat of hat_type
 
 let register h =
   Camera_system.register (h :> drawable);

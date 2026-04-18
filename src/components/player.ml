@@ -14,8 +14,9 @@ let create layer position txt =
   e#forces#set (Vector.mult Cst.player_mass Cst.g);
   e#box#set Rect.{ width = Cst.player_width; height = Cst.player_height };
   e#resolve#set (fun n -> function
-    | Solid { disable_top; disable_bot } when n.y > 0. && not disable_top ->
+    | Solid { disable_top; disable_bot } when n.y > 0. && not disable_top  ->
       e#on_ground#set true
+    | Hat _ -> e#on_ground#set true
     | _ -> ());
   e#layer#set layer;
   Global.update (fun g -> { g with player = Some e });
@@ -46,5 +47,5 @@ let throw player hat =
   Hat.register hat;
   (Global.get_player ())#tag#set (Component_defs.Player None);
   hat#position#set (Vector.add Cst.hat_spawn_player_offset player#position#get);
-  hat#position#set (Vector.mult Cst.hat_spawn_velocity_mag player#velocity#get)
+  hat#velocity#set (Vector.mult Cst.hat_spawn_velocity_mag player#velocity#get)
 ;;
