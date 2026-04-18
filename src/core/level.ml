@@ -35,28 +35,21 @@ let probe lvl layer x y =
     let idx = x + (layer.width * y) in
     if idx >= String.length layer.contents then None else Some layer.contents.[idx]
   | None -> None
+;;
 
 let f lvl =
-  (fun chr layer position (str_x, str_y) ->
-       if chr = 'x'
-       then (
-         let b =
-           Block.create
-             layer
-             position
-             Rect.{ width = 20; height = 20 }
-             Texture.black
-         in
-         b#tag#set (Solid { disable_top = false; disable_bot = false }))
-       else if chr = '@'
-       then (
-         let p =
-           Player.create layer position [| Global.get_texture "extra_character_a" |]
-         in
-         p#tag#set (Player None))
-       else if chr = 'f'
-       then ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez)
-       else ())
+  fun chr layer position (str_x, str_y) ->
+  if chr = 'x'
+  then (
+    let b = Block.create layer position Rect.{ width = 20; height = 20 } Texture.black in
+    b#tag#set (Solid { disable_top = false; disable_bot = false }))
+  else if chr = '@'
+  then (
+    let p = Player.create layer position [| Global.get_texture "extra_character_a" |] in
+    p#tag#set (Player None))
+  else if chr = 'f'
+  then ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez)
+  else ()
 ;;
 
 let load f lvl =
