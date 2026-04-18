@@ -1,0 +1,20 @@
+=== Lucas
+
+NOTE: Comme j'écris du code très vite, j'ai implémenté beaucoup du code du projet; néanmoins chaque fonctionnalité, code et choix technique est le fruit d'un travail de discussion dans le binôme.
+
+Ces parties du jeu me sont attribuables en grande partie:
+
+* Le système d'affichage avec zoom et positionnement de la caméra
+* Le système de ``Level``, permettant de charger/décharger des niveaux du jeu
+* Le système permettant d'attraper/lancer des chapeaux
+* Le système d'interpolation du temps pour permettre de ne pas rater les collisions.
+* Le système de build reproductibles avec Nix
+
+NOTE: Après beaucoup de discussions en binômes; j'ai tapé le code, mais il est le fruit d'un travail commun.
+
+=== Sacha
+
+* Le système de collisions
+* Les textures
+* Le map-making
+* Le code de chargement des textures par continuations

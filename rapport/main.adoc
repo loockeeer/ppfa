@@ -3,6 +3,7 @@
 :email_1: <lucas.rooy@universite-paris-saclay.fr>
 :author_2: Sacha Le Hir Mazé 
 :email_2: <sacha.le-hir-maze@universite-paris-saclay.fr>
+:source-highlighter: rouge
 :doctype: book
 
 // Une présentation de votre jeu et un manuel d'utilisation (~ 3 pages)
@@ -20,7 +21,7 @@ include::presentation-code.adoc[leveloffset=1]
 // algos/structures de données utilisées), un problème d'architecture de code 
 // (dire comment vous avez encapsulé etc…), … (2 pages par point)
 == Présentation de deux points techniques
-=== XYZ
+=== Interpolation du temps pour les collisions
 include::presentation-point-technique-1.adoc[leveloffset=2]
 === X'Y'Z'
 include::presentation-point-technique-2.adoc[leveloffset=2]

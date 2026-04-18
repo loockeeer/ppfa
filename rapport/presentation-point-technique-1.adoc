@@ -1,0 +1,52 @@
+Pour faire la gestion des collisions, on utilisait au départ ce code simpliste :
+
+.game.ml (avant)
+[source,ocaml]
+----
+let update (ticks, dt) =
+	let _ = Input.handle_input (ticks, dt) in
+	Physics_system.update (ticks, dt);
+	Move_system.update (ticks, dt);
+	Collision_system.update (ticks, dt);
+	Camera_system.update (ticks, dt);
+	Animation_system.update (ticks, dt);;
+----
+
+Or, si pour une raison ou une autre, le ``dt`` entre deux appels de ``update``
+est trop grand (c'est-à-dire, suffisamment grand pour qu'un objet avec une
+vitesse suffisamment élevée traverse un obstacle sans déclancher de collisions),
+certaines collisions sont ignorées.
+
+Afin de régler le problème, on effectue une interpolation du temps à chaque
+frame. Supposons qu'entre deux appels à ``update`` se soient passées 
+``dt=200ms``. On effectuera alors les étapes de calcul (move, physics, etc) 
+200 fois, avec un pas de temps de ``1ms`` à chaque fois, afin de ne pas perdre
+en précision.
+
+Bien sûr, cette approche possède des inconvénients, dont un particulièrement 
+visible : son impact sur les performances non négligeable.
+
+Le code est aujourd'hui :
+
+.game.ml (après)
+[source,ocaml]
+----
+let last_ticks = ref 0.
+
+let update (ticks, dt) =
+  if !last_ticks +. 2000. < ticks
+  then (
+    Printf.printf "Current dt = %f\n" dt;
+    last_ticks := ticks);
+  for i = 0 to int_of_float (ceil dt) do
+    let dt = ticks, dt /. ceil dt in
+    let () = Input.handle_input dt in
+    Physics_system.update dt;
+    Move_system.update dt;
+    Collision_system.update dt
+  done;
+  Camera_system.update (ticks, dt);
+  Animation_system.update (ticks, dt);
+  None
+;;
+----

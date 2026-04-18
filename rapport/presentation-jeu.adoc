@@ -5,3 +5,20 @@ Il existe trois chapeaux différents dans le jeu :
 * Le fez lorsque lancé contre une surface
 * Le haut-de-forme que l'on peut utiliser comme trampoline
 * Le béret qui se comporte comme une plateforme volante
+
+Le but du jeu est de rejoindre un porte-manteau en utilisant les chapeaux. Le
+porte-manteau constitue alors une porte permettant de passer au niveau suivant,
+ou de finir le jeu.
+
+Sur le build ``SDL``, le jeu utiliser les touches suivantes :
+
+* ``q`` pour se déplacer à gauche
+* ``d`` pour se déplacer à droite
+* ``[SPACE]`` pour sauter
+* ``e`` pour interagir
+** Lorsqu'on porte un chapeau, cela permet de le lancer
+** Lorsqu'on est à proximité d'un chapeau, cela permet de le porter
+
+IMPORTANT: La mécanique du lancer de chapeau est intéressante; en effet, le chapeau n'est pas
+lancé à proprement parler. Il est propulsé avec la même vitesse que le joueur 
+*multipliée par une constante*. Cela permet de pouvoir poser le chapeau, au lieu de le lancer.
