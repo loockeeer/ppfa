@@ -56,6 +56,10 @@ let f lvl =
          p#tag#set (Player None))
        else if chr = 'f'
        then ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez)
+       else if chr = 'b'
+       then ignore (Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf)
+       else if chr = 'h'
+       then ignore (Hat.create position.x position.y layer (Global.get_texture "beret") Beret)
        else ())
 ;;
 
@@ -75,7 +79,7 @@ let load f lvl =
               | Some v, _ | None, Some v ->
                 (* precedence made obvious here *)
                 Vector.add v Vector.{ x = float x; y = float y }
-            in
+            in 
             f lvl chr layer_idx position (x / layer.stride.width, y / layer.stride.height))
          layer.contents)
     lvl.layers;

@@ -1,6 +1,6 @@
 (* Niveau d'introduction *)
 
-let layer_content_0_0 = "
+let layer_content_0_0 = "\
 x                                       \
 x                                       \
 x                                       \
@@ -11,6 +11,8 @@ x                                       \
 x                                       \
 x                                       \
 x                                       \
+x       f        b    h                 \
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
 x                                       \
 x                                       \
 x                                       \
@@ -20,13 +22,9 @@ x                                       \
 x                                       \
 x                                       \
 x                                       \
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx \
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx "[@@ocamlformat "disable"]
+x                                       \
+x                                       \
+x                                       "[@@ocamlformat "disable"]
 
 let level_0 =
   Level.
