@@ -38,7 +38,6 @@ let probe lvl layer x y =
 ;;
 
 let f lvl =
-
   (fun chr layer position (str_x, str_y) ->
        if chr = 'x'
        then (
@@ -57,11 +56,13 @@ let f lvl =
          in
          p#tag#set (Player None))
        else if chr = 'f'
-       then ignore (Hat.create position.x position.y layer (Global.get_texture "fez") Fez)
+       then Hat.create position.x position.y layer (Global.get_texture "fez") Fez
        else if chr = 'b'
-       then ignore (Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf)
+       then Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
        else if chr = 'h'
-       then ignore (Hat.create position.x position.y layer (Global.get_texture "beret") Beret)
+       then Hat.create position.x position.y layer (Global.get_texture "beret") Beret
+       else if chr = 'p'
+       then Pc.create position.x position.y layer (Global.get_texture "pc")
        else ())
 ;;
 
@@ -89,13 +90,6 @@ let load f lvl =
   Global.update (fun g -> { g with camera = { zoom; pos } })
 ;;
 
-let pause () =
-  Collision.pause ();
-  Move.pause ();
-  Physics.pause ();
-  Input.pause ()
-;;
-
 let fader_array = Array.init 255 (fun i -> Texture.Color (Gfx.color 0 0 0 i))
 let unfader_array = Array.of_list (List.rev (Array.to_list fader_array))
 
@@ -115,8 +109,8 @@ let fade_in = fade fader_array
 let fade_out = fade unfader_array
 
 let fade_in_out f =
-  pause ();
+  Global.freeze ();
   fade_in (fun () ->
     f ();
-    fade_out pause)
+    fade_out Global.freeze)
 ;;

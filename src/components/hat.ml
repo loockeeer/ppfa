@@ -37,5 +37,4 @@ let create x y layer txt tag =
      | Fez -> Rect.{ width = Cst.fez_width; height = Cst.fez_height }
      | Beret -> Rect.{ width = Cst.beret_width; height = Cst.beret_height });
   register e;
-  e
 ;;

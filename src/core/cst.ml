@@ -27,10 +27,12 @@ let fez_height = 12 (* à ajuster 8 *)
 let fez_width = 22 (* à ajuster 15 *)
 let beret_height = 16 (* à ajuster 8 *)
 let beret_width = 30 (* à ajuster 15*)
+
+(* pc : porte chapeau *)
+let pc_height = 40 (* à ajuster 20 *)
+let pc_width = 30 (* à ajuster 15*)
 let block_width = 20
 let block_height = 20
-let hat_stand_width = 40
-let hat_stand_height = 100
 let layer_count = 3
 let g = Vector.{ x = 0.; y = 0.005 }
 let fader_tick_speed = 0.0000001

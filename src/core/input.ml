@@ -66,6 +66,17 @@ let register_map km =
   register
     (KeyDown, Cst.(km.hat_interact))
     (fun _ ->
+      let center_dist src dest = Vector.(
+        norm
+          (sub
+              (Rect.get_center src#box#get src#position#get)
+              (Rect.get_center dest#box#get dest#position#get))) in
+      if center_dist (Global.get_player()) (Global.get_pc()) <= Cst.max_hat_pickup_norm then (
+        Global.update (fun gl -> { gl with level = gl.level + 1 });
+        Level.clear ();
+        Level.load Level.f Levels_content.levels.(Global.get_level ())
+      ) 
+      else 
        match (Global.get_player ())#tag#get with
        | Component_defs.Player (Some hat) ->
          (* Throwing logic here *)
@@ -75,13 +86,7 @@ let register_map km =
          let nearest source others =
            List.fold_left
              (fun acc current ->
-                let new_norm =
-                  Vector.(
-                    norm
-                      (sub
-                         (Rect.get_center source#box#get source#position#get)
-                         (Rect.get_center current#box#get current#position#get)))
-                in
+                let new_norm = center_dist source current in
                 match acc with
                 | Some (x, v) -> if new_norm < v then Some (current, new_norm) else acc
                 | None -> Some (current, new_norm))

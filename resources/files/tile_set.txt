@@ -2,3 +2,4 @@ fez.png
 extra_character_a.png
 hdf.png
 beret.png
+pc.png

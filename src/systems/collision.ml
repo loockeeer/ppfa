@@ -4,8 +4,6 @@ open Component_defs
 type t = collidable
 
 let init _ = ()
-let paused = ref false
-let pause () = paused := not !paused
 
 let rec iter_pairs f s =
   match s () with
@@ -16,7 +14,7 @@ let rec iter_pairs f s =
 ;;
 
 let update _ elts =
-  if !paused
+  if !Global.frozen
   then ()
   else
     iter_pairs
