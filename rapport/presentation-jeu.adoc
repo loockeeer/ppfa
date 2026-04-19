@@ -22,3 +22,47 @@ Sur le build ``SDL``, le jeu utiliser les touches suivantes :
 IMPORTANT: La mécanique du lancer de chapeau est intéressante; en effet, le chapeau n'est pas
 lancé à proprement parler. Il est propulsé avec la même vitesse que le joueur 
 *multipliée par une constante*. Cela permet de pouvoir poser le chapeau, au lieu de le lancer.
+
+=== Le fez
+
+image::../resources/images/fez.png[float=right]
+
+Le fez explose les blocs à une distance maximale de 
+``
+include::../src/core/cst.ml[tag=fez_explode_radius]
+``
+pixels autour de lui lorsque projeté contre une surface à une vitesse 
+de norme minimale
+``
+include::../src/core/cst.ml[tag=fez_explode_velocity]
+``, qui est grossièrement la vitesse de lancer par défaut.
+
+=== Le béret
+
+image::../resources/images/beret.png[float=right]
+
+C'est la seule entité (en dehors des blocs) immune à la gravité et
+aux frottements du sol. Ainsi, une fois lancé (ou poussé), il devient une
+plateforme mouvante permettant de traverser des puits.
+
+=== Le haut de forme
+
+image::../resources/images/hdf.png[float=right]
+
+Le haut de forme se comporte comme un trampoline : sauter dessus augmente la
+vitesse du saut de
+``
+include::../src/core/cst.ml[tag=player_jump_speed]
+`` pixels/seconde à
+``
+include::../src/core/cst.ml[tag=hdf_jump_speed]
+`` pixels/seconde et permet d'accéder à des zones inaccessibles.lateforme permettant de traverser des puits.
+
+
+=== Le porte-chapeau
+
+image::../resources/images/pc.png[float=right]
+
+Il s'agit de l'objectif du jeu ! A l'aide des chapeaux, il faut rejoindre cet
+objet présent sur la carte et appuyer sur la touche ``e`` à proximité
+du porte-chapeau afin de passer au niveau suivant.
