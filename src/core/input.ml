@@ -99,5 +99,11 @@ let register_map km =
           | Some (nearest_hat, norm) ->
             if norm <= Cst.max_hat_pickup_norm
             then Player.grab (Global.get_player ()) nearest_hat
-          | None -> ()))
+          | None -> ()));
+  register
+  (KeyDown, Cst.(km.respawn))
+  (fun _ -> 
+    Level.clear ();
+    Level.load Level.f Levels_content.levels.(Global.get_level ())
+    )
 ;;

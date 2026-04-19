@@ -3,31 +3,44 @@
 (* ajouter texte bg "le beret permet de placer une plateforme oscillante"*)
 
 let layer_content = "\
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x    @                                  \
-x                                p      \
-x      b                                \
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x    @                                 x\
+x                                p     x\
+x      b                               x\
 xxxxxxxxxxxxxx            xxxxxxxxxxxxxx\
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       "[@@ocamlformat "disable"]
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"[@@ocamlformat "disable"]
 
 let level =
   Level.

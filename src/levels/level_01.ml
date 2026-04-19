@@ -8,31 +8,44 @@
 (* bon c'est un peu long donc voir comment faire ça proprement *)
 
 let layer_content = "\
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                 p     \
-x                                       \
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                 p    x\
+x                                      x\
 x                          xxxxxxxxxxxxx\
-x                          x            \
-x               @          x            \
-x                          x            \
-x                          x            \
-x      h                   x            \
+x                          x           x\
+x               @          x           x\
+x                          x           x\
+x                          x           x\
+x      h                   x           x\
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       \
-x                                       "[@@ocamlformat "disable"]
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"[@@ocamlformat "disable"]
 
 let level =
   Level.

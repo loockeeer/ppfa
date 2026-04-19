@@ -3,6 +3,7 @@ type keymap =
   ; move_right : string
   ; jump : string
   ; hat_interact : string
+  ; respawn : string
   }
 let window_width = 600
 let window_height = 400

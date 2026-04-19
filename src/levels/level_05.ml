@@ -24,9 +24,22 @@ x        h     f        b              x\
 x   b         f           h            x\
 x        h         b      f            x\
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
-x                                       \
-x                                       \
-x                                       "[@@ocamlformat "disable"]
+x                                      x\
+x                                      x\
+x                                      x\                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+x                                      x\
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"[@@ocamlformat "disable"]
 
 let level =
   Level.
