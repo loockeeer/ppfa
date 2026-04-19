@@ -128,13 +128,14 @@ struct
   let rec remove_entry keys idx k mask =
     let key = Array.unsafe_get keys idx in
     if key == -1 then 0
-    else if key == k then
+    else if key == k then begin
       let idx' = find_absent keys (next idx mask) mask in
-      let () = if idx' >= 0 then begin
-          clear_until_absent keys (next idx mask) mask idx';
-          Array.unsafe_set keys idx (-1)
-        end else Array.unsafe_set keys idx (-2)
-      in 1
+      if idx' >= 0 then begin
+        (clear_until_absent keys (next idx mask) mask idx';
+          Array.unsafe_set keys idx (-1);
+          1)
+        end else (Array.unsafe_set keys idx (-2); 0)
+      end
     else remove_entry keys (next idx mask) k mask
 
   let remove t (e : #t) =
