@@ -15,6 +15,7 @@ NOTE: Après beaucoup de discussions en binômes; j'ai tapé le code, mais il es
 === Sacha
 
 * Le système de collisions
+* Le porte chapeau
 * Les textures
 * Le map-making
 * Le code de chargement des textures par continuations

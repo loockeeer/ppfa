@@ -43,7 +43,6 @@ let update (_, dt) elts =
       elts;
     Hashtbl.iter
       (fun e _ ->
-         Printf.printf "destroy kaboom\n";
          e#destroy#get ())
       marked_for_deletion)
 ;;

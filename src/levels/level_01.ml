@@ -19,7 +19,7 @@ x                          x           x\
 x               @          x           x\
 x                          x           x\
 x                          x           x\
-x      h                   x           x\
+x      h   f               x           x\
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
 x                                      x\
 x                                      x\
@@ -32,7 +32,7 @@ x                                      x\
 x                                      x\
 x                                      x\
 x                                      x\
-x                                      x\                                      x\
+x                                      x\
 x                                      x\
 x                                      x\
 x                                      x\

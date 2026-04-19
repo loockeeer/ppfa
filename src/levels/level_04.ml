@@ -23,7 +23,7 @@ x       x          @           x       x\
 x  h    x                  f   x       x\
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
-x                                      x\                                      x\
+x                                      x\
 x                                      x\
 x                                      x\
 x                                      x\

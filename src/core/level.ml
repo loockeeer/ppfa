@@ -39,27 +39,30 @@ let probe lvl layer x y =
   | None -> None
 ;;
 
-let f lvl =
-  fun chr layer position (str_x, str_y) ->
-  if chr = 'x'
-  then (
-    let b = Block.create layer position Rect.{ width = 20; height = 20 } Texture.black in
-    b#tag#set (Solid { disable_top = false; disable_bot = false }))
-  else if chr = '@'
-  then (
-    let p = Player.create layer position [| Global.get_texture "extra_character_a" |] in
-    p#tag#set (Player None))
-  else if chr = 'f'
-  then Hat.create position.x position.y layer (Global.get_texture "fez") Fez
-  else if chr = 'h'
-  then Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
-  else if chr = 'b'
-  then
+let f chr layer position =
+  if chr = 'x' then 
+    Block.create layer position Rect.{ width = 20; height = 20 } Texture.black |> ignore
+  else if chr = '@' then  
+    Player.create layer position [| Global.get_texture "extra_character_a" |] |> ignore
+  else if chr = 'f' then 
+    Hat.create position.x position.y layer (Global.get_texture "fez") Fez
+  else if chr = 'h' then 
+    Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
+  else if chr = 'b' then 
     Hat.create position.x position.y layer (Global.get_texture "beret") (Beret position.y)
-  else if chr = 'p'
-  then Pc.create position.x position.y layer (Global.get_texture "pc")
+  else if chr = 'p' then 
+    Pc.create position.x position.y layer (Global.get_texture "pc")
   else ()
 ;;
+
+let get_offset x y layer chr = 
+  match
+  ( Hashtbl.find_opt layer.offsets (Position (x, y))
+  , Hashtbl.find_opt layer.offsets (Named chr) )
+with
+| None, None -> Vector.{ x = 0.; y = 0. }
+| Some v, _ | None, Some v ->
+  (* precedence made obvious here *) v
 
 let load f lvl =
   List.iteri
@@ -68,17 +71,8 @@ let load f lvl =
          (fun idx chr ->
             let x = idx mod layer.width * layer.stride.width in
             let y = idx / layer.width * layer.stride.height in
-            let position =
-              match
-                ( Hashtbl.find_opt layer.offsets (Position (x, y))
-                , Hashtbl.find_opt layer.offsets (Named chr) )
-              with
-              | None, None -> Vector.{ x = float x; y = float y }
-              | Some v, _ | None, Some v ->
-                (* precedence made obvious here *)
-                Vector.add v Vector.{ x = float x; y = float y }
-            in
-            f lvl chr layer_idx position (x / layer.stride.width, y / layer.stride.height))
+            let position = Vector.add Vector.{ x = float x; y = float y } (get_offset x y layer chr) in 
+            f chr layer_idx position)
          layer.contents)
     lvl.layers;
   let zoom, pos = lvl.camera in
