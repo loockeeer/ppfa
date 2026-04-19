@@ -30,20 +30,12 @@ let create layer position txt =
 ;;
 
 let move player dir dt = 
-  let pos : Vector.t = player#position#get in 
-  print_float pos.y;
-  print_newline ();
-  (* if pos.y > 250. then (
-    Level.clear ();
-    Level.load Level.f Levels_content.levels.(Global.get_level ())
-  )
-  else *)
-    (match dir with
-    | Left -> 
-           player#position#set (Vector.add player#position#get (Vector.{x= (-.dt) *. Cst.player_speed;y=0.}))
-    | Right ->
-            player#position#set (Vector.add player#position#get (Vector.{x=dt *.Cst.player_speed;y=0.})));
-    player#looking#set (Some dir)
+  (match dir with
+  | Left -> 
+          player#position#set (Vector.add player#position#get (Vector.{x= (-.dt) *. Cst.player_speed;y=0.}))
+  | Right ->
+          player#position#set (Vector.add player#position#get (Vector.{x=dt *.Cst.player_speed;y=0.})));
+  player#looking#set (Some dir)
 
 let jump player =
   if player#on_ground#get

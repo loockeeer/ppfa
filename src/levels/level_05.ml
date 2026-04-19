@@ -26,7 +26,7 @@ x        h         b      f            x\
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
 x                                      x\
 x                                      x\
-x                                      x\                                      x\
+x                                      x\
 x                                      x\
 x                                      x\
 x                                      x\
