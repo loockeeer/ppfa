@@ -24,7 +24,7 @@ include::presentation-code.adoc[leveloffset=1]
 == Présentation de deux points techniques
 === Interpolation du temps pour les collisions
 include::presentation-point-technique-1.adoc[leveloffset=2]
-=== X'Y'Z'
+=== Méthode de stockage des niveaux
 include::presentation-point-technique-2.adoc[leveloffset=2]
 
 // Les tests effectués (i.e. comment vous avez testé tout 

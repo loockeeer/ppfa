@@ -1,6 +1,6 @@
 Pour stocker les niveaux, on a décidé d'utiliser les types suivants : 
 
-[source, ocaml]
+[source,ocaml]
 ----
 type layer =
   { contents : string; 
@@ -21,13 +21,14 @@ représente un certain objet.
 La champ offset permet plus de précision si besoin. 
 
 Dans notre cas, on a : 
-*x : block
-*f : fez
-*h : haut de forme
-*b : béret
-*p : porte chapeau
 
-[ocaml, source]
+* x -> block
+* f -> fez
+* h -> haut de forme
+* b -> béret
+* p -> porte chapeau
+
+[source,ocaml]
 ----
 let f chr layer position =
   if chr = 'x' then 
@@ -49,7 +50,7 @@ Un niveau est donc donné par une liste de layers ce qui permet d'avoir une supe
 
 Pour load un niveau, on utiise la fonction suivante : 
 
-[source, ocaml]
+[source,ocaml]
 ----
   let load f lvl =
     List.iteri
