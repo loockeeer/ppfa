@@ -21,7 +21,7 @@ let center_dist src dest =
          (Rect.get_center dest#box#get dest#position#get)))
 ;;
 
-let marked_for_deletion : (explodable, unit) Hashtbl.t = Hashtbl.create 5
+let marked_for_deletion : (explodable, unit) Hashtbl.t = Hashtbl.create 50
 
 let update (_, dt) elts =
   if !Global.frozen
@@ -32,11 +32,17 @@ let update (_, dt) elts =
          match self#tag#get, other#tag#get with
          | TExplosion _, TExplosion _ -> ()
          | TExplosion force, _ ->
+           Hashtbl.replace marked_for_deletion self ();
            if center_dist self other <= force
            then (
-              Hashtbl.add marked_for_deletion self ();
-             Hashtbl.add marked_for_deletion other ())
+             Hashtbl.replace marked_for_deletion other ())
+         | _, TExplosion force -> (
+           Hashtbl.replace marked_for_deletion other ();
+           if center_dist self other <= force
+           then (
+             Hashtbl.replace marked_for_deletion self ())
+           )
          | _ -> ())
       elts;
-    Hashtbl.iter (fun explosion _ -> Printf.printf "destroy kaboom\n"; explosion#destroy#get ()) marked_for_deletion)
+    Hashtbl.iter (fun e _ -> Printf.printf "destroy kaboom\n"; e#destroy#get ()) marked_for_deletion)
 ;;
