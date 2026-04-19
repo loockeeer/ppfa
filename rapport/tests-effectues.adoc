@@ -1,0 +1,42 @@
+Nous avons plusieurs fonctionnalités à tester :
+
+* Les chapeaux
+* La physique
+* Les niveaux
+
+Voici notre méthode :
+
+=== Faisabilité des niveaux
+
+Tout d'abord, il faut nous assurer que nos niveaux sont finissables, donc nous
+les testons en jouant afin de voir si le niveau se termine.
+
+L'idée est aussi de noter les problèmes rencontrés : de physique, de fonctionnement
+du chapeau, ou de géométrie du niveau.
+
+Si le problème concerne uniquement le niveau, il est possible de le modifier pour
+le rendre finissable.
+
+Les niveaux sont ce que nous avons de plus proche d'une suite de tests
+reproductibles, il s'agit donc de la base des tests et de la découverte des bugs
+(après tout, si un bug n'est pas déclanché dans les niveaux, est-ce vraiment un
+bug :) ?)
+
+=== Chapeaux
+
+Les chapeaux introduisent des comportements complexes au jeu qu'il est nécessaire
+de tester.
+
+Lorsqu'on voit qu'un chapeau se comporte étrangement, on commence par essayer
+d'isoler le problème : test sur un niveau plat avec juste la géométrie
+nécessaire pour le reproduire.
+
+=== Physique
+
+C'est là que c'est particulièrement amusant : nous avons essayé de marcher
+dans des murs, lancer des chapeaux dans des murs, sauter et marcher dans des murs,
+faire des double-sauts.
+
+Certains chapeaux interagissent avec la physique; en particulier le béret. Pour
+ce dernier, il a fallu faire pas mal d'essais (sauter sur le béret, bloquer le béret,
+lancer le béret contre un mur, dans le vide, etc) afin d'identifier les problèmes.
