@@ -40,3 +40,26 @@ faire des double-sauts.
 Certains chapeaux interagissent avec la physique; en particulier le béret. Pour
 ce dernier, il a fallu faire pas mal d'essais (sauter sur le béret, bloquer le béret,
 lancer le béret contre un mur, dans le vide, etc) afin d'identifier les problèmes.
+
+=== Outils techniques
+
+Afin de mener les tests à bien, nous nous sommes dotés de quelques outils techniques.
+
+==== Déplacement arbitraire du joueur
+
+Pour pouvoir tester plus rapidement, il est utile de pouvoir contrôler les entités
+(et en particulier le joueur) comme bon nous semble.
+
+A cet effet, un clique n'importe où sur la fenêtre permet de déclencher une
+téléportation du joueur au niveau du curseur.
+
+==== Affichages terminal
+
+Notre jeu ne demande pas énormément de debuggage, ainsi, une solution satisfaisante
+pour le suivi des tests est d'utiliser le temrinal pour afficher des informations
+sur la vitesse d'une entité, sa position, la détection d'une collision, etc...
+
+==== Utilisation de la couleur
+
+Pour correctement visualiser les collisions, nous avons utilisé au début de notre
+projet un affichage avec des couleurs différentes selon les collisions en cours.
