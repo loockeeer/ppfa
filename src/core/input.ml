@@ -39,10 +39,9 @@ let handle_input ticks_info =
           action_table)
     | Quit -> exit 0
     | MouseMove (x, y) -> Global.update (fun g -> { g with mouse_x = x; mouse_y = y })
-    | MouseButton (_,pressed,x,y) -> (
-        if pressed then
-            (Global.get_player ())#position#set (Vector.{x = float x; y = float y})
-    )
+    | MouseButton (_, pressed, x, y) ->
+      if pressed
+      then (Global.get_player ())#position#set Vector.{ x = float x; y = float y }
     | _ -> ()
   in
   Hashtbl.iter
@@ -68,42 +67,43 @@ let register_map km =
   register
     (KeyDown, Cst.(km.hat_interact))
     (fun _ ->
-      let center_dist src dest = Vector.(
-        norm
-          (sub
-              (Rect.get_center src#box#get src#position#get)
-              (Rect.get_center dest#box#get dest#position#get))) in
-      if center_dist (Global.get_player()) (Global.get_pc()) <= Cst.max_hat_pickup_norm then (
-        Global.update (fun gl -> { gl with level = gl.level + 1 });
-        Level.clear ();
-        Level.load Level.f Levels_content.levels.(Global.get_level ())
-      ) 
-      else 
-       match (Global.get_player ())#tag#get with
-       | Component_defs.Player (Some hat) ->
-         (* Throwing logic here *)
-         Player.throw (Global.get_player ()) hat
-       | _ ->
-         (* Pickup logic here *)
-         let nearest source others =
-           List.fold_left
-             (fun acc current ->
-                let new_norm = center_dist source current in
-                match acc with
-                | Some (x, v) -> if new_norm < v then Some (current, new_norm) else acc
-                | None -> Some (current, new_norm))
-             None
-             others
-         in
-         (match nearest (Global.get_player ()) (Global.get ()).wild_hats with
-          | Some (nearest_hat, norm) ->
-            if norm <= Cst.max_hat_pickup_norm
-            then Player.grab (Global.get_player ()) nearest_hat
-          | None -> ()));
+       let center_dist src dest =
+         Vector.(
+           norm
+             (sub
+                (Rect.get_center src#box#get src#position#get)
+                (Rect.get_center dest#box#get dest#position#get)))
+       in
+       if center_dist (Global.get_player ()) (Global.get_pc ()) <= Cst.max_hat_pickup_norm
+       then (
+         Global.update (fun gl -> { gl with level = gl.level + 1 });
+         Level.clear ();
+         Level.load Level.f Levels_content.levels.(Global.get_level ()))
+       else (
+         match (Global.get_player ())#tag#get with
+         | Component_defs.Player (Some hat) ->
+           (* Throwing logic here *)
+           Player.throw (Global.get_player ()) hat
+         | _ ->
+           (* Pickup logic here *)
+           let nearest source others =
+             List.fold_left
+               (fun acc current ->
+                  let new_norm = center_dist source current in
+                  match acc with
+                  | Some (x, v) -> if new_norm < v then Some (current, new_norm) else acc
+                  | None -> Some (current, new_norm))
+               None
+               others
+           in
+           (match nearest (Global.get_player ()) (Global.get ()).wild_hats with
+            | Some (nearest_hat, norm) ->
+              if norm <= Cst.max_hat_pickup_norm
+              then Player.grab (Global.get_player ()) nearest_hat
+            | None -> ())));
   register
-  (KeyDown, Cst.(km.respawn))
-  (fun _ -> 
-    Level.clear ();
-    Level.load Level.f Levels_content.levels.(Global.get_level ())
-    )
+    (KeyDown, Cst.(km.respawn))
+    (fun _ ->
+       Level.clear ();
+       Level.load Level.f Levels_content.levels.(Global.get_level ()))
 ;;

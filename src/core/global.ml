@@ -21,7 +21,6 @@ type t =
 
 let frozen = ref false
 let freeze () = frozen := not !frozen
-
 let state = ref None
 
 let get () : t =
@@ -36,9 +35,7 @@ let get_pc () = Option.get (get ()).pc
 let get_texture name = Hashtbl.find (get ()).textures name
 let get_level () = (get ()).level
 
-
 let update f =
   let g = get () in
   set (f g)
 ;;
-

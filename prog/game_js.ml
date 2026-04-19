@@ -3,5 +3,7 @@ let debug = Gfx.open_formatter "console"
 let () = Gfx.set_debug_formatter debug
 
 let () =
-  Game.run Game.{ move_left = "q"; move_right = "d"; jump = " "; hat_interact = "e"; respawn = "r" }
+  Game.run
+    Game.
+      { move_left = "q"; move_right = "d"; jump = " "; hat_interact = "e"; respawn = "r" }
 ;;

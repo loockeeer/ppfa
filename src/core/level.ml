@@ -22,12 +22,13 @@ type level =
   }
 
 let clear () =
+  Global.update (fun g -> { g with wild_hats = []; player = None });
   Collision_system.reset ();
   Animation_system.reset ();
   Move_system.reset ();
   Physics_system.reset ();
   Camera_system.reset ();
-  Global.update (fun g -> { g with wild_hats = []})
+  Explosion_system.reset ()
 ;;
 
 let probe lvl layer x y =
@@ -39,32 +40,25 @@ let probe lvl layer x y =
 ;;
 
 let f lvl =
-  (fun chr layer position (str_x, str_y) ->
-       if chr = 'x'
-       then (
-         let b =
-           Block.create
-             layer
-             position
-             Rect.{ width = 20; height = 20 }
-             Texture.black
-         in
-         b#tag#set (Solid { disable_top = false; disable_bot = false }))
-       else if chr = '@'
-       then (
-         let p =
-           Player.create layer position [| Global.get_texture "extra_character_a" |]
-         in
-         p#tag#set (Player None))
-       else if chr = 'f'
-       then Hat.create position.x position.y layer (Global.get_texture "fez") Fez
-       else if chr = 'h'
-       then Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
-       else if chr = 'b'
-       then Hat.create position.x position.y layer (Global.get_texture "beret") Beret
-       else if chr = 'p'
-       then Pc.create position.x position.y layer (Global.get_texture "pc")
-       else ())
+  fun chr layer position (str_x, str_y) ->
+  if chr = 'x'
+  then (
+    let b = Block.create layer position Rect.{ width = 20; height = 20 } Texture.black in
+    b#tag#set (Solid { disable_top = false; disable_bot = false }))
+  else if chr = '@'
+  then (
+    let p = Player.create layer position [| Global.get_texture "extra_character_a" |] in
+    p#tag#set (Player None))
+  else if chr = 'f'
+  then Hat.create position.x position.y layer (Global.get_texture "fez") Fez
+  else if chr = 'h'
+  then Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
+  else if chr = 'b'
+  then
+    Hat.create position.x position.y layer (Global.get_texture "beret") (Beret position.y)
+  else if chr = 'p'
+  then Pc.create position.x position.y layer (Global.get_texture "pc")
+  else ()
 ;;
 
 let load f lvl =
@@ -83,7 +77,7 @@ let load f lvl =
               | Some v, _ | None, Some v ->
                 (* precedence made obvious here *)
                 Vector.add v Vector.{ x = float x; y = float y }
-            in 
+            in
             f lvl chr layer_idx position (x / layer.stride.width, y / layer.stride.height))
          layer.contents)
     lvl.layers;

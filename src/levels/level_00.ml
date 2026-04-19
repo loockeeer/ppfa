@@ -1,6 +1,5 @@
 (* Level 0 *)
 
-
 (* ajouter texte bg "appuyer sur e à côté du porte chapeau pour passer au niveau suivant"*)
 
 let layer_content = "\

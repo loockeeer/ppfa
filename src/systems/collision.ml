@@ -60,6 +60,7 @@ let update _ elts =
                let v = Vector.sub e1#velocity#get e2#velocity#get in
                let e =
                  match e1#tag#get, e2#tag#get with
+                 | Hat (Beret _), Solid _ | Solid _, Hat (Beret _) -> 1.
                  | Hat _, _ | _, Hat _ -> 0.2
                  | _ -> 0.
                in

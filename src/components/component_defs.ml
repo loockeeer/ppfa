@@ -62,8 +62,13 @@ class forces () =
     method forces = r
   end
 
+type grounds =
+  | Not_grounded
+  | Ground_solid
+  | Ground_hdf
+
 class on_ground () =
-  let r = Component.init true in
+  let r = Component.init Not_grounded in
   object
     method on_ground = r
   end
@@ -107,7 +112,7 @@ class looking () =
 type hat_type =
   | Hdf
   | Fez
-  | Beret
+  | Beret of float
 
 type tag = ..
 

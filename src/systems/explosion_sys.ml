@@ -34,15 +34,16 @@ let update (_, dt) elts =
          | TExplosion force, _ ->
            Hashtbl.replace marked_for_deletion self ();
            if center_dist self other <= force
-           then (
-             Hashtbl.replace marked_for_deletion other ())
-         | _, TExplosion force -> (
+           then Hashtbl.replace marked_for_deletion other ()
+         | _, TExplosion force ->
            Hashtbl.replace marked_for_deletion other ();
            if center_dist self other <= force
-           then (
-             Hashtbl.replace marked_for_deletion self ())
-           )
+           then Hashtbl.replace marked_for_deletion self ()
          | _ -> ())
       elts;
-    Hashtbl.iter (fun e _ -> Printf.printf "destroy kaboom\n"; e#destroy#get ()) marked_for_deletion)
+    Hashtbl.iter
+      (fun e _ ->
+         Printf.printf "destroy kaboom\n";
+         e#destroy#get ())
+      marked_for_deletion)
 ;;

@@ -9,8 +9,7 @@ let create x y layer txt =
   e#texture#set txt;
   e#position#set Vector.{ x; y };
   e#layer#set layer;
-  e#box#set Rect.{ width = Cst.pc_width; height = Cst.pc_height } ;
+  e#box#set Rect.{ width = Cst.pc_width; height = Cst.pc_height };
   Camera_system.register (e :> drawable);
   Global.update (fun gl -> { gl with pc = Some e })
-
 ;;

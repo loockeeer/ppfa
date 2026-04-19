@@ -9,7 +9,7 @@ let window_width = 600
 let window_height = 400
 let player_width = 20
 let player_height = 20
-let player_speed = 0.1
+let player_speed = 0.3
 let player_mass = 1.
 let player_jump_speed = (* tag::player_jump_speed[] *)
 0.5
@@ -36,6 +36,7 @@ let fez_explode_velocity = (* tag::fez_explode_velocity[] *)
 (* end::fez_explode_velocity[] *)
 let beret_height = 16 (* à ajuster 8 *)
 let beret_width = 30 (* à ajuster 15*)
+let beret_velocity = 0.1
 
 (* pc : porte chapeau *)
 let pc_height = 40 (* à ajuster 20 *)
