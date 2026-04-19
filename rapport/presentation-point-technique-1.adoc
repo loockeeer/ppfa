@@ -17,11 +17,25 @@ est trop grand (c'est-à-dire, suffisamment grand pour qu'un objet avec une
 vitesse suffisamment élevée traverse un obstacle sans déclancher de collisions),
 certaines collisions sont ignorées.
 
-Afin de régler le problème, on effectue une interpolation du temps à chaque
-frame. Supposons qu'entre deux appels à ``update`` se soient passées 
+Cette situation se produit dans beaucoup de cas :
+
+* Si, peut-être, le système d'exploitation décide de laisser dormir notre jeu
+pendant trop longtemps. Dans ce cas, on pourrait utiliser ``nice`` pour sans
+sortir, à la rigueur, mais ce n'est pas optimal
+* Si les calculs et l'affichage de la frame précédente ont été trop longs; cela
+se produit couramment, en particulier lorsque nous avons beaucoup d'entités
+présentes.
+
+Afin de régler le problème, on effectue une interpolation du temps à chaque update. 
+
+Supposons qu'entre deux appels à ``update`` se soient passées 
 ``dt=200ms``. On effectuera alors les étapes de calcul (move, physics, etc) 
 200 fois, avec un pas de temps de ``1ms`` à chaque fois, afin de ne pas perdre
 en précision.
+
+Ainsi, chaque grand pas de temps est décomposé en petits pas de temps (donc en
+plus petits mouvements) que l'on peut analyser finement; on a moins de chances
+de perdre des collisions!
 
 Bien sûr, cette approche possède des inconvénients, dont un particulièrement 
 visible : son impact sur les performances non négligeable, pour y pallier, nous

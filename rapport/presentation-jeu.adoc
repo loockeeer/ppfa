@@ -19,6 +19,19 @@ Sur le build ``SDL``, le jeu utiliser les touches suivantes :
 ** Lorsqu'on porte un chapeau, cela permet de le lancer
 ** Lorsqu'on est à proximité d'un chapeau, cela permet de le porter
 
+Pour le lancer, il suffit de faire ``make run_sdl``, car nous nous sommes
+concentrés sur la version SDL du jeu. Il est possible d'utiliser Nix pour obtenir
+un environnement de développement, en faisant ``nix develop`` à la racine.
+
+Nous possédons actuellement quatre niveaux.
+
+* Un premier niveau permet simplement de se familiariser avec les contrôles
+* Un second niveau permet de découvrir le fonctionnement du haut de forme
+* Un troisième niveau permet de découvrir le fonctionnement du fez
+* Un quatrième niveau permet de découvrir le fonctionnement du béret
+* Un cinquième niveau montre les possibilités de puzzle du jeu
+* Un sixième niveau pour dire au revoir!
+
 === Le fez
 
 image::../resources/images/fez.png[float=right]

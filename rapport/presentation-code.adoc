@@ -61,3 +61,57 @@ Le code est structuré autour du module ``Level``, qui permet de charger et
 décharger des niveaux, du module ``Game``, qui constitue l'entrypoint du jeu
 et se charge de l'initialisation et du chargement des textures, et du module
 ``Inputs``, qui permet l'interaction avec le joueur.
+
+=== Architecture des chapeaux
+
+Les chapeaux ont des fonctionnalités complexes, différentes pour chacun d'entre eux :
+
+==== Le Fez
+
+On utilise le resolver des collisions pour détecter lorsqu'il faut faire une explosion.
+Dès que c'est le cas, on supprime le fez et on crée une entité explosion à sa position.
+
+==== Le Haut de Forme
+
+Celui-ci possède son fonctionnement dans le resolver des collisions du player, car
+c'est dans ce resolver que l'on décide le type de surface sur laquelle le player se
+trouve.
+
+Si c'est un Haut de Forme, alors on saura au moment de sauter qu'il faut sauter avec
+une vitesse plus élevée
+
+==== Le Béret
+
+Celui-ci est plus complexe. Dans son resolver, on remet sa hauteur et sa vitesse
+aux bonnes v
+
+=== Architecture des chapeaux
+
+En général, les chapeaux peuvent être attrapés (nearest neighbour) par le joueur et
+portés, après quoi on désactive tous leurs systèmes, et leur affichage et réalisé
+en même temps que celui du joueur.
+
+Lorsqu'il est lancé, le comportement peut être un peu différent entre certains
+chapeaux, mais on le réenregistre simplement dans leur systèmes.
+
+Les chapeaux ont des fonctionnalités complexes, différentes pour chacun d'entre eux :
+
+==== Le Fez
+
+On utilise le resolver des collisions pour détecter lorsqu'il faut faire une explosion.
+Dès que c'est le cas, on supprime le fez et on crée une entité explosion à sa position.
+
+==== Le Haut de Forme
+
+Celui-ci possède son fonctionnement dans le resolver des collisions du player, car
+c'est dans ce resolver que l'on décide le type de surface sur laquelle le player se
+trouve.
+
+Si c'est un Haut de Forme, alors on saura au moment de sauter qu'il faut sauter avec
+une vitesse plus élevée
+
+==== Le Béret
+
+Celui-ci est plus complexe. Dans son resolver, on remet sa hauteur et sa vitesse aux bonnes 
+valeurs, et dans le système des collisions, on met l'elasticité entre le Béret et les murs à 1,
+afin qu'il ne soit pas ralenti de toute façon (inutile après coup, il s'agit d'un artefact).
