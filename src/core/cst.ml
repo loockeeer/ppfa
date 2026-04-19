@@ -4,11 +4,6 @@ type keymap =
   ; jump : string
   ; hat_interact : string
   }
-
-type hat_type =
-  | Hdf
-  | Fez
-
 let window_width = 600
 let window_height = 400
 let player_width = 20

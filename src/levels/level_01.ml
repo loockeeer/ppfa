@@ -1,17 +1,25 @@
-(* Niveau d'introduction *)
+(* Level 1 *)
+
+(* Ajouter texte bg 
+"- appuyer sur e à côté d'un chapeau permet de le récupérer, 
+ - re-appuyer permet de le lancer 
+- le haut de forme permet de sauter plus haut" *)
+
+(* bon c'est un peu long donc voir comment faire ça proprement *)
 
 let layer_content = "\
 x                                       \
 x                                       \
 x                                       \
 x                                       \
-x               @                       \
+x                                 p     \
 x                                       \
-x                                       \
-x                                       \
-x                                       \
-x           p                           \
-x       f        b    h    f            \
+x                          xxxxxxxxxxxxx\
+x                          x            \
+x               @          x            \
+x                          x            \
+x                          x            \
+x      h                   x            \
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
 x                                       \
 x                                       \

@@ -1,17 +1,20 @@
-(* Level 1 *)
+(* Level 0 *)
+
+
+(* ajouter texte bg "appuyer sur e à côté du porte chapeau pour passer au niveau suivant"*)
 
 let layer_content = "\
 x                                       \
 x                                       \
 x                                       \
 x                                       \
-x                                 p     \
+x               @                       \
 x                                       \
-x                          xxxxxxxxxxxxx\
-x                          x            \
-x               @          x            \
-x                          x            \
-x      h                   x            \
+x                                       \
+x                                       \
+x                                       \
+x                   p                   \
+x                                       \
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
 x                                       \
 x                                       \
