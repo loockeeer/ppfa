@@ -1,5 +1,63 @@
-=== Préambule : Modification de Gfx
+=== Préambule : Modification de Gfx et Ecs
 
 La boucle est appelée avec un couple ``(ticks, dt)`` (le nombre de ticks (unité
 pas importante) depuis le début du jeu, le nombre de ticks depuis la dernière
 actualisation). C'est plus pratique.
+
+Sur suggestion de Adrien, et avec son patch, nous avons modifié ``Ecs`` qui ne
+supprimait pas correctement les entités.
+
+=== Composants et entités
+
+Nous avons définis des composants permettant de créer les types d'entités :
+
+* ``drawable``, pouvant être dessiné
+* ``animated``, pouvant être dessiné et animé. Dans ce cas, le champ
+``tick_speed`` correspond au nombre de ticks à attendre avant de changer de
+texture. Le champ ``animation_callback`` est un thunk, appelé lorsque l'animation
+a effectué un tour (et est sur le point de revenir à 0).
+* ``collidable``, pouvant être sujet aux collisions
+* ``physics``, pouvant être déplacé et accéléré par les systèmes ``Move`` et
+``Physics``.
+* ``explodable``, pouvant être explosé. Cet entity type est aussi utilisé par
+l'entité ``explosion``, qui porte alors un tag particulier indiquant la force
+de l'explosion.
+
+Voici un inventaire des entités que nous avons ajoutées :
+
+* ``player`` est un joueur
+* ``hat`` est une entité représentant un chapeau, qu'il soit porté ou non
+** Si le chapeau est porté, alors il est désenregistré de tous les systèmes et
+ajouté dans le tag du joueur (tag ``Player of hat``)
+** Si le chapeau est présent dans le monde, alors il est enregistré dans les
+systèmes appropriés et présent dans la liste ``wild_hats`` accessible via ``Global``.
+* ``block`` est un rectangle ayant une texture, une position, une taille, et la 
+possibilité d'être cassé (par une explosion). Il s'agit d'une entité très présente
+dans le jeu car elle est utilisée pour construire les parois du puzzle.
+* ``explosion`` est une explosion. Par simplicité, elle est de sur-type 
+``explodable``. Le centre de l'explosion et le centre de sa box (ajouté à sa
+position), et la force de l'explosion est alors la valeur de ``force`` dans son
+tag qui doit être ``TExplosion force``. Si le tag est différent, l'explosion
+est considéré comme un ``explodable`` classique (pouvant être explosé).
+
+=== Systèmes
+
+Les systèmes ``Physics``, ``Move`` et ``Collision`` sont exactement ceux faits
+durants les TPs.
+
+Nous possédons aussi un système ``Animation``, qui se charge de modifier la
+texture d'un objet lorsque sa ``tick_speed`` est passée, afin de l'animer.
+
+Le système ``Camera`` est intéressant, car il permet de définir une caméra
+ayant une position et un zoom; cela est utile pour l'effet de tremblement lors
+d'une explosion
+
+Enfin, le système ``Explosion_sys`` (nommé de cette façon pour ne pas rentrer
+en collision avec le module de l'entité ``Explosion``) régit les explosions.
+
+=== Architecture générale
+
+Le code est structuré autour du module ``Level``, qui permet de charger et
+décharger des niveaux, du module ``Game``, qui constitue l'entrypoint du jeu
+et se charge de l'initialisation et du chargement des textures, et du module
+``Inputs``, qui permet l'interaction avec le joueur.
