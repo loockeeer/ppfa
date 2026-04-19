@@ -1,0 +1,30 @@
+Pour stocker les levels, on a décidé d'utiliser 
+
+[source, ocaml]
+----
+type layer =
+  { contents : string; 
+    offsets : (selector, Vector.t ) Hashtbl.t;
+    width : int;
+    stride : Rect.t;
+  }
+
+type level =
+  { layers : layer list;
+    camera : float * Vector.t;
+  }
+
+  let load f lvl =
+    List.iteri
+        (fun layer_idx layer ->
+        String.iteri
+            (fun idx chr ->
+                let x = idx mod layer.width * layer.stride.width in
+                let y = idx / layer.width * layer.stride.height in
+                let position = Vector.add Vector.{ x = float x; y = float y } (get_offset x y layer chr) in 
+                f chr layer_idx position)
+            layer.contents)
+        lvl.layers;
+    let zoom, pos = lvl.camera in
+    Global.update (fun g -> { g with camera = { zoom; pos } })
+----
