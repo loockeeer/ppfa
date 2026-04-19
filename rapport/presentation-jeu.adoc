@@ -19,10 +19,6 @@ Sur le build ``SDL``, le jeu utiliser les touches suivantes :
 ** Lorsqu'on porte un chapeau, cela permet de le lancer
 ** Lorsqu'on est à proximité d'un chapeau, cela permet de le porter
 
-IMPORTANT: La mécanique du lancer de chapeau est intéressante; en effet, le chapeau n'est pas
-lancé à proprement parler. Il est propulsé avec la même vitesse que le joueur 
-*multipliée par une constante*. Cela permet de pouvoir poser le chapeau, au lieu de le lancer.
-
 === Le fez
 
 image::../resources/images/fez.png[float=right]
