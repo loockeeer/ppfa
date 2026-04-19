@@ -13,8 +13,8 @@ x                                  x   x\
 x                                  x   x\
 x  h  b                            x   x\
 xxxxxxxxxxx                  xxxxxxxxxxx\
-x             xx                       x\
-x             xxxxx                    x\
+x            xxx                       x\
+x            xxxxxx                    x\
 x                    xxxx              x\
 x                    xxxxxx    xxxxxxxxx\
 xxxxxxxxx                      x       x\
