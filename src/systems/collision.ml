@@ -58,8 +58,11 @@ let update _ elts =
                e2#position#set (Vector.sub e2#position#get (Vector.mult n2 n));
                let n = Vector.normalize n in
                let v = Vector.sub e1#velocity#get e2#velocity#get in
-               let e = match e1#tag#get, e2#tag#get with
-               | Hat _, _ | _, Hat _ -> 0.2 | _ -> 0. in
+               let e =
+                 match e1#tag#get, e2#tag#get with
+                 | Hat _, _ | _, Hat _ -> 0.2
+                 | _ -> 0.
+               in
                let j = -.(1. +. e) /. ((1. /. m1) +. (1. /. m2)) *. Vector.dot v n in
                e1#velocity#set (Vector.add e1#velocity#get (Vector.mult (j /. m1) n));
                e2#velocity#set (Vector.sub e2#velocity#get (Vector.mult (j /. m2) n));

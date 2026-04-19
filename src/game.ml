@@ -17,11 +17,12 @@ let update (ticks, dt) =
     Printf.printf "Current dt = %f\n" dt;
     last_ticks := ticks);
   for i = 0 to int_of_float (ceil (dt /. 5.)) do
-    let dt = ticks, dt /. (ceil (dt /. 5.)) in
+    let dt = ticks, dt /. ceil (dt /. 5.) in
     let () = Input.handle_input dt in
     Physics_system.update dt;
     Move_system.update dt;
-    Collision_system.update dt
+    Collision_system.update dt;
+    Explosion_system.update dt
   done;
   Camera_system.update (ticks, dt);
   Animation_system.update (ticks, dt);
@@ -45,7 +46,7 @@ let run_custom window keymap images =
       ; fader = None
       ; pc = None
       ; wild_hats = []
-      ; level = 0;
+      ; level = 0
       }
   in
   List.iter

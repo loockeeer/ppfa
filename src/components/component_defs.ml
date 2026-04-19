@@ -86,15 +86,23 @@ class paused () =
     method paused = r
   end
 
+class explosion_force () =
+  let r = Component.init 0. in
+  object
+    method explosion_force = r
+  end
+
 type looking_at =
-    | Left
-    | Right
+  | Left
+  | Right
 
 class looking () =
-    let r : < get : looking_at option ; set : looking_at option -> unit > = Component.init None in
-    object
-        method looking = r
-    end
+  let r : < get : looking_at option ; set : looking_at option -> unit > =
+    Component.init None
+  in
+  object
+    method looking = r
+  end
 
 type hat_type =
   | Hdf
@@ -110,6 +118,7 @@ type tag +=
       ; disable_bot : bool
       }
   | Hat of hat_type
+  | TExplosion of float
 
 class tagged () =
   let r = Component.init No_tag in
@@ -121,6 +130,12 @@ class resolver () =
   let r = Component.init (fun (_ : Vector.t) (_ : tag) -> ()) in
   object
     method resolve = r
+  end
+
+class destroy () =
+  let r = Component.init (fun () -> ()) in
+  object
+    method destroy = r
   end
 
 class type drawable = object
@@ -162,6 +177,23 @@ class type physics = object
   inherit mass
 end
 
+class type explodable = object
+  inherit Entity.t
+  inherit position
+  inherit box
+  inherit tagged
+  inherit destroy
+end
+
+class explosion =
+  object
+    inherit Entity.t ()
+    inherit position ()
+    inherit box ()
+    inherit tagged ()
+    inherit destroy ()
+  end
+
 class block () =
   object
     inherit Entity.t ()
@@ -173,6 +205,7 @@ class block () =
     inherit velocity ()
     inherit resolver ()
     inherit layer ()
+    inherit destroy ()
   end
 
 (* Entity used for fading purposes (see [Level.fade]) 

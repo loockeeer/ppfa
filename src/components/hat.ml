@@ -2,7 +2,6 @@ open Ecs
 open Component_defs
 open System_defs
 
-
 let register h =
   Camera_system.register (h :> drawable);
   Physics_system.register (h :> physics);
@@ -36,5 +35,17 @@ let create x y layer txt tag =
      | Hdf -> Rect.{ width = Cst.hdf_width; height = Cst.hdf_height }
      | Fez -> Rect.{ width = Cst.fez_width; height = Cst.fez_height }
      | Beret -> Rect.{ width = Cst.beret_width; height = Cst.beret_height });
-  register e;
+  if tag = Fez
+  then
+    e#resolve#set (fun _ other ->
+      match other with
+      | Solid _ ->
+        if Vector.norm e#velocity#get >= Cst.fez_explode_velocity
+        then (
+          Explosion.create
+            (Rect.get_center e#box#get e#position#get)
+            (Cst.fez_explode_radius |> float);
+          unregister e)
+      | _ -> ());
+  register e
 ;;
