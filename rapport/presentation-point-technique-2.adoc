@@ -1,4 +1,4 @@
-Pour stocker les levels, on a décidé d'utiliser 
+Pour stocker les niveaux, on a décidé d'utiliser les types suivants : 
 
 [source, ocaml]
 ----
@@ -13,7 +13,44 @@ type level =
   { layers : layer list;
     camera : float * Vector.t;
   }
+----
 
+Les niveaux sont des quadrillages de blocks de taille élémentaire donnée par stride avec width qui dicte le nombre de blocks par ligne.
+Le contenu de chaque layer est sérialisé sous forme de chaine de caractères où chaque caractère 
+représente un certain objet.
+La champ offset permet plus de précision si besoin. 
+
+Dans notre cas, on a : 
+*x : block
+*f : fez
+*h : haut de forme
+*b : béret
+*p : porte chapeau
+
+[ocaml, source]
+----
+let f chr layer position =
+  if chr = 'x' then 
+    Block.create layer position Rect.{ width = 20; height = 20 } Texture.black |> ignore
+  else if chr = '@' then  
+    Player.create layer position [| Global.get_texture "extra_character_a" |] |> ignore
+  else if chr = 'f' then 
+    Hat.create position.x position.y layer (Global.get_texture "fez") Fez
+  else if chr = 'h' then 
+    Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
+  else if chr = 'b' then 
+    Hat.create position.x position.y layer (Global.get_texture "beret") (Beret position.y)
+  else if chr = 'p' then 
+    Pc.create position.x position.y layer (Global.get_texture "pc")
+  else ()
+----
+
+Un niveau est donc donné par une liste de layers ce qui permet d'avoir une superposition de calque.
+
+Pour load un niveau, on utiise la fonction suivante : 
+
+[source, ocaml]
+----
   let load f lvl =
     List.iteri
         (fun layer_idx layer ->
@@ -28,3 +65,5 @@ type level =
     let zoom, pos = lvl.camera in
     Global.update (fun g -> { g with camera = { zoom; pos } })
 ----
+
+La gestion des layers est ainsi naturellement gérée par l'ordre par laquelle on itère sur la variable layer.
