@@ -1,37 +1,10 @@
 # Le Jeu du Chapeau
 
-## TODO
-- Régler le pb des collisions ( collisions manquées qd vitesse + double saut murs)
-- Ajouter HdF
-- Ajouter Fez
-- Ajouter Plateforme
-- Ajouter mécanisme d'attrapage du chapeau
-- Ajouter le mécanisme de «chapeau porté»
-- Ajouter le mécanisme de lancement du chapeau
-    - Il faut pour ça logger la dernière direction du joueur
-- Ajouter le mécanisme de dépôt du chapeau
-
-## Trois chapeaux
-
-- Le **béret** qui se comporte comme une plateforme oscillante
-- Le **haut de forme** qui permet de rebondir
-- Le **fez** qui explose
-
-## Un objectif
-
-La porte, qu'il faut passer, et le porte chapeaux, qui doit être rempli afin de pouvoir passer la porte.
-
-## Objectif
-
-5 niveaux ?
-
-## MODIFCATION DE GFX /!\
-
-La boucle est appelée avec un couple (ticks, dt) maintenant.
+Le rapport est nommé `rapport-rooy-le--hir--maze.pdf`
 
 ## Nix
 
-J'ai ajouté un flake qui permet de démarrer un environnement de développement/de
+J'ai ajouté une flake qui permet de démarrer un environnement de développement/de
 test assez rapidement avec [Nix](https://nixos.org/nix).
 Il suffit de faire
 ```sh
@@ -40,8 +13,7 @@ nix develop
 
 ## Formatage
 
-J'apprécie ne pas avoir à formatter mon code moi-même, et j'aime bien le style
-de Janestreet donc c'est celui que j'utilise avec ocamlformat.
+Avec `ocamlformat` profil `janestreet`. Commande : `dune fmt`
 
 # Game - ancien readme
 
