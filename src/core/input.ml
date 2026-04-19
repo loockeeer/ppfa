@@ -39,6 +39,10 @@ let handle_input ticks_info =
           action_table)
     | Quit -> exit 0
     | MouseMove (x, y) -> Global.update (fun g -> { g with mouse_x = x; mouse_y = y })
+    | MouseButton (_,pressed,x,y) -> (
+        if pressed then
+            (Global.get_player ())#position#set (Vector.{x = float x; y = float y})
+    )
     | _ -> ()
   in
   Hashtbl.iter
