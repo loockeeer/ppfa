@@ -86,6 +86,16 @@ class paused () =
     method paused = r
   end
 
+type looking_at =
+    | Left
+    | Right
+
+class looking () =
+    let r : < get : looking_at option ; set : looking_at option -> unit > = Component.init None in
+    object
+        method looking = r
+    end
+
 type hat_type =
   | Hdf
   | Fez
@@ -214,6 +224,7 @@ class player () =
     inherit layer ()
     inherit animation_callback ()
     inherit paused ()
+    inherit looking ()
   end
 
 class hat () =

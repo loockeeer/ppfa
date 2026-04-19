@@ -18,6 +18,7 @@ let create layer position txt =
       e#on_ground#set true
     | Hat _ -> e#on_ground#set true
     | _ -> ());
+  e#looking#set None;
   e#layer#set layer;
   Global.update (fun g -> { g with player = Some e });
   Camera_system.(register (e :> t));
@@ -28,7 +29,13 @@ let create layer position txt =
   e
 ;;
 
-let move player v = player#position#set (Vector.add player#position#get v)
+let move player dir dt = 
+    (match dir with
+    | Left -> 
+           player#position#set (Vector.add player#position#get (Vector.{x= (-.dt) *. Cst.player_speed;y=0.}))
+    | Right ->
+            player#position#set (Vector.add player#position#get (Vector.{x=dt *.Cst.player_speed;y=0.})));
+    player#looking#set (Some dir)
 
 let jump player =
   if player#on_ground#get
@@ -47,5 +54,10 @@ let throw player hat =
   Hat.register hat;
   (Global.get_player ())#tag#set (Component_defs.Player None);
   hat#position#set (Vector.add Cst.hat_spawn_player_offset player#position#get);
-  hat#velocity#set (Vector.mult Cst.hat_spawn_velocity_mag player#velocity#get)
+  hat#velocity#set (Vector.{x=(
+    match player#looking#get with
+    | None -> 0.
+    | Some Left -> -.Cst.hat_spawn_velocity_mag
+    | Some Right -> Cst.hat_spawn_velocity_mag
+  ); y=player#velocity#get.y})
 ;;
