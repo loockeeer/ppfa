@@ -21,8 +21,6 @@ let update (ticks, dt) =
   for i = 0 to int_of_float (ceil (dt /. 5.)) do
     let dt = ticks, dt /. ceil (dt /. 5.) in
     let () = Input.handle_input dt in
-    if not (Vector.is_zero (Global.get_player ())#velocity#get) then 
-    begin Vector.p (Global.get_player ())#velocity#get end;
     Physics_system.update dt;
     Move_system.update dt;
     Collision_system.update dt;

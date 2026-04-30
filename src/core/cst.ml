@@ -34,7 +34,7 @@ let fez_explode_radius = (* tag::fez_explode_radius[] *)
 30
 (* end::fez_explode_radius[] *)
 let fez_explode_velocity = (* tag::fez_explode_velocity[] *)
-0.4
+0.2
 (* end::fez_explode_velocity[] *)
 let beret_height = 16 (* à ajuster 8 *)
 let beret_width = 30 (* à ajuster 15*)

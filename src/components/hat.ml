@@ -44,7 +44,7 @@ let create x y layer txt tag =
      e#resolve#set (fun _ other ->
        match other with
        | Solid _ ->
-         if Vector.norm e#velocity#get >= Cst.fez_explode_velocity
+         if e#is_thrown#get && Vector.norm e#velocity#get >= Cst.fez_explode_velocity
          then (
            Explosion.create
              (Rect.get_center e#box#get e#position#get)
@@ -61,8 +61,8 @@ let create x y layer txt tag =
             e#tag#set (Hat(Beret(y, c)))
           else
             (match other with 
-            |Player _ -> e#velocity#set {e#velocity#get with y = 0.};
-            e#position#set {e#position#get with y = y}
+            |Player _ -> (e#velocity#set {e#velocity#get with y = 0.};
+            e#position#set {e#position#get with y = y})
             | _ -> ());
       )  
    | _ -> ());

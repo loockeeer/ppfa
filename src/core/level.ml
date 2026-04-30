@@ -49,7 +49,7 @@ let f chr layer position =
   else if chr = 'h' then 
     Hat.create position.x position.y layer (Global.get_texture "hdf") Hdf
   else if chr = 'b' then 
-    Hat.create position.x position.y layer (Global.get_texture "beret") (Beret (position.y, 1.))
+    Hat.create position.x position.y layer (Global.get_texture "beret") (Beret (position.y, 0.))
   else if chr = 'p' then 
     Pc.create position.x position.y layer (Global.get_texture "pc")
   else ()

@@ -13,7 +13,7 @@ x                                      x\
 x                                      x\
 x                                      x\
 x                   p                  x\
-x       b                              x\
+x                                      x\
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\
 x                                      x\
 x                                      x\
