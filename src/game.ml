@@ -15,10 +15,14 @@ let update (ticks, dt) =
   if !last_ticks +. 2000. < ticks
   then (
     Printf.printf "Current dt = %f\n" dt;
+    if dt > 100. then 
+      assert false;
     last_ticks := ticks);
   for i = 0 to int_of_float (ceil (dt /. 5.)) do
     let dt = ticks, dt /. ceil (dt /. 5.) in
     let () = Input.handle_input dt in
+    if not (Vector.is_zero (Global.get_player ())#velocity#get) then 
+    begin Vector.p (Global.get_player ())#velocity#get end;
     Physics_system.update dt;
     Move_system.update dt;
     Collision_system.update dt;

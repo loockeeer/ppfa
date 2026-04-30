@@ -57,12 +57,22 @@ let register_map km =
     (KeyHold, Cst.(km.move_left))
     (fun (_, dt) ->
        let open Global in
-       Player.move (get_player ()) Left dt);
+       Player.smove (get_player ()) Left dt);
+  register
+    (KeyUp, Cst.(km.move_left))
+    (fun (_, dt) ->
+       let open Global in
+       Player.emove (get_player ()) Left dt);
   register
     (KeyHold, Cst.(km.move_right))
     (fun (_, dt) ->
        let open Global in
-       Player.move (get_player ()) Right dt);
+       Player.smove (get_player ()) Right dt);
+  register
+    (KeyUp, Cst.(km.move_right))
+    (fun (_, dt) ->
+       let open Global in
+       Player.emove (get_player ()) Right dt);
   register (KeyDown, Cst.(km.jump)) (fun _ -> Player.jump (Global.get_player ()));
   register
     (KeyDown, Cst.(km.hat_interact))

@@ -10,10 +10,12 @@ let window_height = 400
 let player_width = 20
 let player_height = 20
 let player_speed = 0.3
-let player_mass = 1.
+let player_mass = 1000.
 let player_jump_speed = (* tag::player_jump_speed[] *)
-0.5
+0.75
 (* end::player_jump_speed[] *)
+
+let hat_mass = 1.
 
 let max_hat_pickup_norm = player_width * 2 |> float
 let hat_spawn_player_offset = Vector.{ x = 0.; y = -5. }
@@ -47,3 +49,4 @@ let layer_count = 3
 let g = Vector.{ x = 0.; y = 0.005 }
 let fader_tick_speed = 0.0000001
 let hat_worn_offset = Vector.{ x = 0.; y = -20. }
+let min_threshold_collision =  0.08

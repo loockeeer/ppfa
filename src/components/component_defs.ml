@@ -62,10 +62,15 @@ class forces () =
     method forces = r
   end
 
+type hat_type =
+  | Hdf
+  | Fez
+  | Beret of float * float
+
 type grounds =
   | Not_grounded
   | Ground_solid
-  | Ground_hdf
+  | Ground of hat_type
 
 class on_ground () =
   let r = Component.init Not_grounded in
@@ -109,10 +114,19 @@ class looking () =
     method looking = r
   end
 
-type hat_type =
-  | Hdf
-  | Fez
-  | Beret of float
+class dir () = 
+  let r : < get : looking_at option ; set : looking_at option -> unit > =
+    Component.init None
+  in
+  object
+    method dir = r
+  end
+
+class is_thrown () =
+  let r = Component.init false in
+  object
+    method is_thrown = r
+  end
 
 type tag = ..
 
@@ -263,6 +277,7 @@ class player () =
     inherit animation_callback ()
     inherit paused ()
     inherit looking ()
+    inherit dir ()
   end
 
 class hat () =
@@ -277,6 +292,7 @@ class hat () =
     inherit velocity ()
     inherit resolver ()
     inherit layer ()
+      inherit is_thrown ()
   end
 
 class pc () =

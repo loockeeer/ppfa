@@ -27,7 +27,9 @@ let update _ elts =
            in
            if Rect.has_origin s_pos s_rect
            then (
-             let n = Rect.penetration_vector s_pos s_rect in
+             let n = (match e1#tag#get, e2#tag#get with 
+              |Solid _, _ | _, Solid _-> Rect.penetration_vector_wthreshold s_pos s_rect
+              | _ ->   Rect.penetration_vector s_pos s_rect) in
              if
                match e1#tag#get, e2#tag#get with
                | Solid s, _ ->
@@ -44,6 +46,9 @@ let update _ elts =
                  else true
                | _ -> true
              then (
+              (match e1#tag#get, e2#tag#get with 
+              |Player _, _ | _, Player _ -> Vector.e 10
+              | _ -> ());
                let r = Vector.norm e1#velocity#get +. Vector.norm e2#velocity#get in
                let n1, n2 =
                  if Float.is_infinite m1
@@ -51,8 +56,8 @@ let update _ elts =
                  else if Float.is_infinite m2
                  then 1.0, 0.0
                  else if e1#velocity#get = Vector.zero && e2#velocity#get = Vector.zero
-                 then 0.5, 0.5
-                 else Vector.norm e1#velocity#get /. r, Vector.norm e2#velocity#get /. r
+                 then (Vector.e 10; 0.5, 0.5)
+                 else (Vector.e 100; Vector.norm e1#velocity#get /. r, Vector.norm e2#velocity#get /. r)
                in
                e1#position#set (Vector.add e1#position#get (Vector.mult n1 n));
                e2#position#set (Vector.sub e2#position#get (Vector.mult n2 n));
@@ -68,6 +73,7 @@ let update _ elts =
                e1#velocity#set (Vector.add e1#velocity#get (Vector.mult (j /. m1) n));
                e2#velocity#set (Vector.sub e2#velocity#get (Vector.mult (j /. m2) n));
                e2#resolve#get n e1#tag#get;
-               e1#resolve#get (Vector.mult (-1.) n) e2#tag#get))))
+               e1#resolve#get (Vector.mult (-1.) n) e2#tag#get)))
+               )
       elts
 ;;

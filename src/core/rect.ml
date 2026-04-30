@@ -40,6 +40,27 @@ let is_zero f = f = 0.0 || f = -0.0
        |      |
        --------
 *)
+
+let minv nx ny cx cy = 
+  if nx < ny then 
+    Vector.{ x = cx; y = 0.}
+  else
+    Vector.{ x = 0.; y = cy}
+
+let penetration_vector_wthreshold s_pos s_rect = 
+  let cx = (if Float.abs (float s_rect.width +. s_pos.x) < Float.abs s_pos.x then float s_rect.width +. s_pos.x else s_pos.x) in 
+  let nx = Float.abs cx in 
+  let cy =  (if Float.abs (float s_rect.height +. s_pos.y) < Float.abs s_pos.y then float s_rect.height +. s_pos.y else s_pos.y) in 
+  let ny = Float.abs cy in
+  if nx <= Cst.min_threshold_collision then
+    Vector.{ x = 0.; y = cy}
+  else(
+    if nx < ny then 
+      Vector.{ x = cx; y = 0.}
+    else
+      Vector.{ x = 0.; y = cy}
+  ) 
+
 let penetration_vector s_pos s_rect =
   let n0 = Vector.{ x = 0.0; y = s_pos.y } in
   let n1 = min_norm n0 Vector.{ x = 0.0; y = float s_rect.height +. s_pos.y } in
