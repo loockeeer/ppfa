@@ -17,6 +17,7 @@ type t =
   ; wild_hats : Component_defs.hat list
   ; pc : Component_defs.pc option
   ; level : int
+  ; animations : (string, Texture.t array) Hashtbl.t
   }
 
 let frozen = ref false
@@ -33,6 +34,7 @@ let set s = state := Some s
 let get_player () = Option.get (get ()).player
 let get_pc () = Option.get (get ()).pc
 let get_texture name = Hashtbl.find (get ()).textures name
+let get_animation name = Hashtbl.find (get ()).animations name
 let get_level () = (get ()).level
 
 let update f =

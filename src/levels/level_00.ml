@@ -71,6 +71,6 @@ let level =
             ; stride = Rect.{ width = 32; height = 32 }
             }
         ]
-    ; camera = (1., Vector.{ x = 0.; y = 0. })
+    ; camera = (2., Vector.{ x = 0.; y = 0. })
     }
 ;;

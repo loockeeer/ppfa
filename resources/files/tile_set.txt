@@ -4,3 +4,7 @@ hdf.png
 beret.png
 pc.png
 world_tileset.png
+player/running.png
+player/idling.png
+player/falling.png
+player/jumping.png

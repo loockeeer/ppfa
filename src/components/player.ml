@@ -2,9 +2,30 @@ open Ecs
 open Component_defs
 open System_defs
 
+let player_get_textures player =
+  let looking = Option.value ~default:Left player#looking#get in
+  match player#on_ground#get with
+  | Not_grounded when Vector.(player#velocity#get.y) >= 0. ->
+    (match looking with
+     | Left -> Global.get_animation "player_jumping_left"
+     | Right -> Global.get_animation "player_jumping_right")
+  | Not_grounded ->
+    (match looking with
+     | Left -> Global.get_animation "player_falling_left"
+     | Right -> Global.get_animation "player_falling_right")
+  | _ ->
+    (match player#dir#get with
+     | None ->
+       (match looking with
+        | Left -> Global.get_animation "player_idling_left"
+        | Right -> Global.get_animation "player_idling_right")
+     | Some Left -> Global.get_animation "player_running_left"
+     | Some Right -> Global.get_animation "player_running_right")
+;;
+
 let create layer position txt =
   let e = new player () in
-  e#textures#set txt;
+  e#textures#set (player_get_textures e);
   e#texture#set txt.(0);
   e#tick_speed#set 50.;
   e#position#set position;
@@ -13,17 +34,19 @@ let create layer position txt =
   e#velocity#set Vector.zero;
   e#forces#set (Vector.mult Cst.player_mass Cst.g);
   e#box#set Rect.{ width = Cst.player_width; height = Cst.player_height };
-  e#resolve#set (fun n -> function
-    | Solid { disable_top; disable_bot } when n.y > 0. && not disable_top ->
-      e#on_ground#set Ground_solid
-    | Hat hat_type ->
-      e#on_ground#set (Ground hat_type);
-      e#velocity#set { (e#velocity#get) with y = 0. };
-      (match hat_type with
-       | Beret (_, c) ->
-         if n.y <> 0. then e#velocity#set { x = Cst.beret_velocity *. c; y = 0. }
-       | _ -> ())
-    | _ -> ());
+  e#resolve#set (fun n other ->
+    (match other with
+     | Solid { disable_top; disable_bot } when n.y > 0. && not disable_top ->
+       e#on_ground#set Ground_solid
+     | Hat hat_type ->
+       e#on_ground#set (Ground hat_type);
+       e#velocity#set { (e#velocity#get) with y = 0. };
+       (match hat_type with
+        | Beret (_, c) ->
+          if n.y <> 0. then e#velocity#set { x = Cst.beret_velocity *. c; y = 0. }
+        | _ -> ())
+     | _ -> ());
+    e#textures#set (player_get_textures e));
   e#looking#set None;
   e#dir#set None;
   e#layer#set layer;
@@ -60,7 +83,8 @@ let smove player dir dt =
   player#velocity#set
     Vector.
       { x = dir_to_float player#dir#get *. Cst.player_speed; y = player#velocity#get.y };
-  player#looking#set (Some dir)
+  player#looking#set (Some dir);
+  player#textures#set (player_get_textures player)
 ;;
 
 let emove player dir dt =
@@ -79,7 +103,8 @@ let emove player dir dt =
       | Right -> player#dir#set (Some Left)));
   player#velocity#set
     Vector.
-      { x = dir_to_float player#dir#get *. Cst.player_speed; y = player#velocity#get.y }
+      { x = dir_to_float player#dir#get *. Cst.player_speed; y = player#velocity#get.y };
+  player#textures#set (player_get_textures player)
 ;;
 
 let jump player =
@@ -91,7 +116,8 @@ let jump player =
   in
   let v = player#velocity#get in
   player#velocity#set Vector.{ x = v.x; y = v.y +. delta_vy };
-  player#on_ground#set Not_grounded
+  player#on_ground#set Not_grounded;
+  player#textures#set (player_get_textures player)
 ;;
 
 let grab player hat =

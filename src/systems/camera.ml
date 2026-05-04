@@ -58,7 +58,9 @@ let update _ el =
   let layers =
     Array.init (Cst.layer_count + 1) (fun i ->
       let sf = Gfx.create_surface ctx ww wh in
-      Gfx.set_color ctx (Gfx.color 0 0 0 0);
+      if i = 0 then
+          Gfx.set_color ctx (Cst.background_color)
+      else Gfx.set_color ctx (Gfx.color 0 0 0 0);
       Gfx.fill_rect ctx sf 0 0 ww wh;
       sf)
   in

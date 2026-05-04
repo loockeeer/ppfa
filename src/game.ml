@@ -22,7 +22,7 @@ let update (ticks, dt) =
     Physics_system.update dt;
     Move_system.update dt;
     Collision_system.update dt;
-    Explosion_system.update dt
+    Explosion_system.update dt;
   done;
   Camera_system.update (ticks, dt);
   Animation_system.update (ticks, dt);
@@ -47,6 +47,7 @@ let run_custom window keymap images =
       ; pc = None
       ; wild_hats = []
       ; level = 0
+      ; animations = Hashtbl.create 16
       }
   in
   List.iter
@@ -56,6 +57,49 @@ let run_custom window keymap images =
   Input.register_map keymap;
   Fader.create ();
   Global.freeze ();
+  (* Generate animations *)
+  let txt_slice = Texture.slice ctx in
+  let txt_sym = Texture.sym ctx in
+  (* Idling *)
+  let idling_frames =
+    let sprite = Global.get_texture "player/idling" in
+    txt_slice 19 19 sprite
+  in
+  Hashtbl.add Global.(global.animations) "player_idling_left" idling_frames;
+  Hashtbl.add
+    Global.(global.animations)
+    "player_idling_right"
+    (Array.map txt_sym idling_frames);
+  (* Running *)
+  let running_frames =
+    let sprite = Global.get_texture "player/running" in
+    txt_slice 19 19 sprite
+  in
+  Hashtbl.add Global.(global.animations) "player_running_left" running_frames;
+  Hashtbl.add
+    Global.(global.animations)
+    "player_running_right"
+    (Array.map txt_sym running_frames);
+  (* Jumping *)
+  let jumping_frames =
+    let sprite = Global.get_texture "player/jumping" in
+    txt_slice 19 19 sprite
+  in
+  Hashtbl.add Global.(global.animations) "player_jumping_left" jumping_frames;
+  Hashtbl.add
+    Global.(global.animations)
+    "player_jumping_right"
+    (Array.map txt_sym jumping_frames);
+  (* Falling *)
+  let falling_frames =
+    let sprite = Global.get_texture "player/falling" in
+    txt_slice 19 19 sprite
+  in
+  Hashtbl.add Global.(global.animations) "player_falling_left" jumping_frames;
+  Hashtbl.add
+    Global.(global.animations)
+    "player_falling_right"
+    (Array.map txt_sym falling_frames);
   Level.load Level.f Levels_content.levels.(global.level);
   Level.fade_out Global.freeze;
   let@ () = Gfx.main_loop ~limit:false init in

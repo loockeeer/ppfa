@@ -76,36 +76,37 @@ let f chr layer position =
       else if chr = '['
       then Pc.create position.x position.y layer (Global.get_texture "pc")
     | Some (Terrain x) ->
-      if x = 0 || x = 1 then ()
-      else
-      (match get_tile_rect x with
-       | Some (src_x, src_y, src_rect) ->
-         let texture =
-           match Global.get_texture "world_tileset" with
-           | Color c -> Texture.Color c
-           | Image surf ->
-             let glob = Global.get () in
-             let new_surf = Gfx.create_surface glob.ctx src_rect.width src_rect.height in
-             Gfx.blit_full
-               glob.ctx
-               new_surf
-               surf
-               src_x
-               src_y
-               src_rect.width
-               src_rect.height
-               0
-               0
-               src_rect.width
-               src_rect.height;
-             Image new_surf
-         in
-         let b = Block.create layer position Rect.{ width = 32; height = 32 } texture in
-         if layer <> Cst.layer_count - 1
-         then (
-           Explosion_system.unregister (b :> explodable);
-           Collision_system.unregister (b :> collidable))
-       | None -> ())
+      if x = 0 || x = 1
+      then ()
+      else (
+        match get_tile_rect x with
+        | Some (src_x, src_y, src_rect) ->
+          let texture =
+            match Global.get_texture "world_tileset" with
+            | Color c -> Texture.Color c
+            | Image surf ->
+              let glob = Global.get () in
+              let new_surf = Gfx.create_surface glob.ctx src_rect.width src_rect.height in
+              Gfx.blit_full
+                glob.ctx
+                new_surf
+                surf
+                src_x
+                src_y
+                src_rect.width
+                src_rect.height
+                0
+                0
+                src_rect.width
+                src_rect.height;
+              Image new_surf
+          in
+          let b = Block.create layer position Rect.{ width = 32; height = 32 } texture in
+          if layer <> Cst.layer_count - 1
+          then (
+            Explosion_system.unregister (b :> explodable);
+            Collision_system.unregister (b :> collidable))
+        | None -> ())
     | None -> ())
 ;;
 
