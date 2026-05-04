@@ -5,8 +5,9 @@ type keymap =
   ; hat_interact : string
   ; respawn : string
   }
-let window_width = 600
-let window_height = 400
+
+let window_width = 40*32
+let window_height = 23*32
 let player_width = 20
 let player_height = 20
 let player_speed = 0.3
@@ -45,7 +46,7 @@ let pc_height = 40 (* à ajuster 20 *)
 let pc_width = 30 (* à ajuster 15*)
 let block_width = 20
 let block_height = 20
-let layer_count = 3
+let layer_count = 2
 let g = Vector.{ x = 0.; y = 0.005 }
 let fader_tick_speed = 0.0000001
 let hat_worn_offset = Vector.{ x = 0.; y = -20. }

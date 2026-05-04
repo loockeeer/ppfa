@@ -15,8 +15,6 @@ let update (ticks, dt) =
   if !last_ticks +. 2000. < ticks
   then (
     Printf.printf "Current dt = %f\n" dt;
-    if dt > 100. then 
-      assert false;
     last_ticks := ticks);
   for i = 0 to int_of_float (ceil (dt /. 5.)) do
     let dt = ticks, dt /. ceil (dt /. 5.) in
@@ -35,7 +33,7 @@ let ( let@ ) f = f
 
 let run_custom window keymap images =
   let ctx = Gfx.get_context window in
-  let () = Gfx.set_context_logical_size ctx 800 600 in
+  let () = Gfx.set_context_logical_size ctx Cst.window_width Cst.window_height in
   let global =
     Global.
       { window
@@ -66,7 +64,10 @@ let run_custom window keymap images =
 ;;
 
 let run keys =
-  let win = Gfx.create "game_canvtexturesas:800x600:" in
+  let win =
+    Gfx.create
+      (Printf.sprintf "game_canvtexturesas:%dx%d:" Cst.window_width Cst.window_height)
+  in
   let ts = Gfx.load_file "resources/files/tile_set.txt" in
   Gfx.main_loop
     (fun _ -> Gfx.get_resource_opt ts)

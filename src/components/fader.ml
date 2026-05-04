@@ -20,7 +20,7 @@ let create () =
   fader#box#set Rect.{ width = 2 * ww; height = 2 * wh };
   fader#tick_speed#set Cst.fader_tick_speed;
   (* Draw the fader on top of everything *)
-  fader#layer#set (Cst.layer_count - 1);
+  fader#layer#set Cst.layer_count;
   Animation_system.register (fader :> animated);
   Camera_system.register (fader :> drawable);
   Global.update (fun g -> { g with fader = Some fader })

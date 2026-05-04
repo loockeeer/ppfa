@@ -114,7 +114,7 @@ class looking () =
     method looking = r
   end
 
-class dir () = 
+class dir () =
   let r : < get : looking_at option ; set : looking_at option -> unit > =
     Component.init None
   in
@@ -292,7 +292,7 @@ class hat () =
     inherit velocity ()
     inherit resolver ()
     inherit layer ()
-      inherit is_thrown ()
+    inherit is_thrown ()
   end
 
 class pc () =

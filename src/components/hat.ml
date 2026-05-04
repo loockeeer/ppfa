@@ -51,20 +51,20 @@ let create x y layer txt tag =
              (Cst.fez_explode_radius |> float);
            unregister e)
        | _ -> ())
-    | Beret (y, _) -> 
-      e#resolve#set(
-        fun _ other -> 
-          if e#is_thrown#get then 
-            let c = if e#velocity#get.x > 0. then 1. else -1. in 
-            e#velocity#set {x = c *. Cst.beret_velocity; y = 0.};
-            e#position#set {e#position#get with y = y};
-            e#tag#set (Hat(Beret(y, c)))
-          else
-            (match other with 
-            |Player _ -> (e#velocity#set {e#velocity#get with y = 0.};
-            e#position#set {e#position#get with y = y})
-            | _ -> ());
-      )  
+   | Beret (y, _) ->
+     e#resolve#set (fun _ other ->
+       if e#is_thrown#get
+       then (
+         let c = if e#velocity#get.x > 0. then 1. else -1. in
+         e#velocity#set { x = c *. Cst.beret_velocity; y = 0. };
+         e#position#set { (e#position#get) with y };
+         e#tag#set (Hat (Beret (y, c))))
+       else (
+         match other with
+         | Player _ ->
+           e#velocity#set { (e#velocity#get) with y = 0. };
+           e#position#set { (e#position#get) with y }
+         | _ -> ()))
    | _ -> ());
   register e
 ;;

@@ -27,9 +27,12 @@ let update _ elts =
            in
            if Rect.has_origin s_pos s_rect
            then (
-             let n = (match e1#tag#get, e2#tag#get with 
-              |Solid _, _ | _, Solid _-> Rect.penetration_vector_wthreshold s_pos s_rect
-              | _ ->   Rect.penetration_vector s_pos s_rect) in
+             let n =
+               match e1#tag#get, e2#tag#get with
+               | Solid _, _ | _, Solid _ ->
+                 Rect.penetration_vector_wthreshold s_pos s_rect
+               | _ -> Rect.penetration_vector s_pos s_rect
+             in
              if
                match e1#tag#get, e2#tag#get with
                | Solid s, _ ->
@@ -70,7 +73,6 @@ let update _ elts =
                e1#velocity#set (Vector.add e1#velocity#get (Vector.mult (j /. m1) n));
                e2#velocity#set (Vector.sub e2#velocity#get (Vector.mult (j /. m2) n));
                e2#resolve#get n e1#tag#get;
-               e1#resolve#get (Vector.mult (-1.) n) e2#tag#get)))
-               )
+               e1#resolve#get (Vector.mult (-1.) n) e2#tag#get))))
       elts
 ;;

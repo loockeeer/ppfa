@@ -41,8 +41,5 @@ let update (_, dt) elts =
            then Hashtbl.replace marked_for_deletion self ()
          | _ -> ())
       elts;
-    Hashtbl.iter
-      (fun e _ ->
-         e#destroy#get ())
-      marked_for_deletion)
+    Hashtbl.iter (fun e _ -> e#destroy#get ()) marked_for_deletion)
 ;;

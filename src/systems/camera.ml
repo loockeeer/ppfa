@@ -56,7 +56,7 @@ let update _ el =
     zoom_centered camera.pos Rect.{ width = ww; height = wh } (1. /. camera.zoom)
   in
   let layers =
-    Array.init Cst.layer_count (fun i ->
+    Array.init (Cst.layer_count + 1) (fun i ->
       let sf = Gfx.create_surface ctx ww wh in
       Gfx.set_color ctx (Gfx.color 0 0 0 0);
       Gfx.fill_rect ctx sf 0 0 ww wh;
@@ -88,7 +88,7 @@ let update _ el =
            h#texture#get
        | _ -> ())
     el;
-  for i = 0 to Cst.layer_count - 1 do
+  for i = 0 to Cst.layer_count do
     Gfx.blit ctx surface layers.(i) 0 0
   done;
   Gfx.commit ctx

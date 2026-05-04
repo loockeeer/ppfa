@@ -3,3 +3,4 @@ extra_character_a.png
 hdf.png
 beret.png
 pc.png
+world_tileset.png
