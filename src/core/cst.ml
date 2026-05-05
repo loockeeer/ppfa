@@ -37,7 +37,9 @@ let fez_explode_radius = (* tag::fez_explode_radius[] *)
 30
 (* end::fez_explode_radius[] *)
 let fez_explode_velocity = (* tag::fez_explode_velocity[] *)
-0.2
+0.15
+
+let hat_e = 0.1
 
 (* end::fez_explode_velocity[] *)
 let beret_height = 16 (* à ajuster 8 *)
@@ -53,4 +55,4 @@ let layer_count = 2
 let g = Vector.{ x = 0.; y = 0.005 }
 let fader_tick_speed = 0.0000001
 let hat_worn_offset = Vector.{ x = 9.; y = -10. }
-let min_threshold_collision =  0.08
+let min_threshold_collision =  0.15

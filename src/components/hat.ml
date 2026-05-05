@@ -41,6 +41,7 @@ let create x y layer txt tag =
      | Beret _ -> Rect.{ width = Cst.beret_width; height = Cst.beret_height });
   (match tag with
    | Fez ->
+           e#forces#set (Vector.mult (0.5 *. Cst.hat_mass) Cst.g);
      e#resolve#set (fun _ other ->
        match other with
        | Solid _ ->

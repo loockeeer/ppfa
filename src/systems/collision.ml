@@ -66,7 +66,7 @@ let update _ elts =
                let e =
                  match e1#tag#get, e2#tag#get with
                  | Hat (Beret _), Solid _ | Solid _, Hat (Beret _) -> 1.
-                 | Hat _, _ | _, Hat _ -> 0.2
+                 | Hat _, _ | _, Hat _ -> 0.
                  | _ -> 0.
                in
                let j = -.(1. +. e) /. ((1. /. m1) +. (1. /. m2)) *. Vector.dot v n in
