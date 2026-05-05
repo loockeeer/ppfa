@@ -128,19 +128,18 @@ let grab player hat =
 let throw player hat =
   Hat.register hat;
   hat#is_thrown#set true;
-  (Global.get_player ())#tag#set (Component_defs.Player None);
   hat#position#set (Vector.add Cst.hat_worn_offset player#position#get);
-  match hat#tag#get with
+  (match hat#tag#get with
   | Hat (Beret (y, _)) ->
     (match player#looking#get with
      | None -> hat#velocity#set { x = 0.; y = 0. }
-     | Some Right ->
-       hat#velocity#set { x = -.Cst.beret_velocity; y = 0. };
-       hat#position#set Vector.{ x = hat#position#get.x -. Cst.hat_worn_offset.y; y };
-       hat#tag#set (Hat (Beret (y, -1.)))
      | Some Left ->
-       hat#velocity#set { x = Cst.beret_velocity; y = 0. };
-       hat#position#set Vector.{ x = hat#position#get.x +. Cst.hat_worn_offset.y; y });
+       hat#velocity#set { x = -.Cst.beret_velocity; y = 0. };
+       hat#position#set Vector.{ x = hat#position#get.x -. Cst.hat_worn_offset.y -. 40.; y };
+       hat#tag#set (Hat (Beret (y, -1.)))
+     | Some Right ->
+      hat#velocity#set { x = Cst.beret_velocity; y = 0. };
+       hat#position#set Vector.{ x = hat#position#get.x +. Cst.hat_worn_offset.y +. 20.; y });
     hat#tag#set (Hat (Beret (y, 1.)))
   | _ ->
     hat#velocity#set
@@ -151,5 +150,7 @@ let throw player hat =
              | Some Left -> -.Cst.hat_spawn_velocity_mag
              | Some Right -> Cst.hat_spawn_velocity_mag)
         ; y = player#velocity#get.y
-        }
+        });
+      (Global.get_player ())#tag#set (Component_defs.Player None);
+
 ;;

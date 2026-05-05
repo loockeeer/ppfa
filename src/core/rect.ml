@@ -58,7 +58,7 @@ let penetration_vector_wthreshold s_pos s_rect =
     else s_pos.y
   in
   let ny = Float.abs cy in
-  if nx <= Cst.min_threshold_collision
+  if nx <= Cst.min_threshold_collision && ny <= Cst.min_threshold_collision
   then Vector.{ x = 0.; y = cy }
   else if nx < ny
   then Vector.{ x = cx; y = 0. }
